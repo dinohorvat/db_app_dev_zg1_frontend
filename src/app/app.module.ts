@@ -5,18 +5,18 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 import { TabsModule } from 'ng2-bootstrap/tabs';
-import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
+import { NAV_DROPDOWN_DIRECTIVES } from './components/shared/nav-dropdown.directive';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
-import { AsideToggleDirective } from './shared/aside.directive';
-import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+import { SIDEBAR_TOGGLE_DIRECTIVES } from './components/shared/sidebar.directive';
+import { AsideToggleDirective } from './components/shared/aside.directive';
+import { BreadcrumbsComponent } from './components/shared/breadcrumb.component';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
 
 //Layouts
-import { FullLayoutComponent } from './layouts/full-layout.component';
+import { FullLayoutComponent } from './components/layouts/full-layout.component';
 
 @NgModule({
   imports: [
