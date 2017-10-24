@@ -18,8 +18,16 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'dashboard',
-        loadChildren: './components/dashboard/dashboard.module#DashboardModule'
+        path: 'service-info',
+        loadChildren: './components/user/service-info/service-info.module#ServiceInfoModule'
+      },
+      {
+        path: 'user-profile',
+        loadChildren: './components/user/user-profile/user-profile.module#UserProfileModule'
+      },
+      {
+        path: 'rewards',
+        loadChildren: './components/user/rewards/rewards.module#RewardsModule'
       },
     ]
   }

@@ -17,6 +17,9 @@ import { AppRoutingModule } from './app.routing';
 
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
+import { ServiceInfoComponent } from './components/user/service-info/service-info.component';
+import { RewardsComponent } from './components/user/rewards/rewards.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 
 @NgModule({
   imports: [
