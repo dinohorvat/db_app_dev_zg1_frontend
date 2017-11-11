@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PermissionService} from "angular2-permission/dist";
 
 @Component({
   selector: 'app-dashboard',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FullLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private permissionService: PermissionService) {
+    this.permissionService.add('User'); //TODO: Poziv iz keycloaka za rolu?
+  }
 
   public disabled:boolean = false;
   public status:{isopen:boolean} = {isopen: false};

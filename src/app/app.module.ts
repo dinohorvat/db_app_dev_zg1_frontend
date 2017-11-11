@@ -20,6 +20,7 @@ import { FullLayoutComponent } from './components/layouts/full-layout.component'
 import { ServiceInfoComponent } from './components/user/service-info/service-info.component';
 import { RewardsComponent } from './components/user/rewards/rewards.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import {Ng2Permission} from "angular2-permission/dist";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    Ng2Permission
   ],
   declarations: [
     AppComponent,
