@@ -8,8 +8,8 @@
     </ul>
 </header>
 
-<div class="app-body" [hasPermission]="['User']">
-    <div class="sidebar">
+<div class="app-body">
+    <div class="sidebar" [hasPermission]="['User']">
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item">
@@ -20,6 +20,19 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/rewards']"><i class="icon-speedometer"></i> Rewards </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="sidebar" [hasPermission]="['Employee']">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/service-info']"><i class="icon-speedometer"></i> Employee Info </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/user-profile']"><i class="icon-speedometer"></i> Emlpoyee Profile </a>
                 </li>
             </ul>
         </nav>

@@ -4,5 +4,10 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  endpoint: 'http://localhost:8080/dcs/',
+  keyCloak: {
+    basicUrl:"http://localhost:8095/auth/realms/DxhDev/protocol/openid-connect",
+    clientId:"GUI"
+  },
+  applicationUrl:"http://localhost:4200"};

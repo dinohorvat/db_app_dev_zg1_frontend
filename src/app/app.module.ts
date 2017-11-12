@@ -21,6 +21,17 @@ import { ServiceInfoComponent } from './components/user/service-info/service-inf
 import { RewardsComponent } from './components/user/rewards/rewards.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import {Ng2Permission} from "angular2-permission/dist";
+import {GlobalService} from "./services/global.service";
+import {BranchService} from "./services/assets/branch.service";
+import {CompanyService} from "./services/assets/company.service";
+import {CurrencyService} from "./services/assets/currency.service";
+import {CustomerService} from "./services/assets/customer.service";
+import {EmployeeService} from "./services/assets/employee.service";
+import {LocationService} from "./services/assets/location.service";
+import {ProductService} from "./services/assets/product.service";
+import {TransactionsService} from "./services/assets/transactions.service";
+import {HttpModule} from "@angular/http";
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
   imports: [
@@ -29,7 +40,8 @@ import {Ng2Permission} from "angular2-permission/dist";
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    Ng2Permission
+    Ng2Permission,
+      HttpModule
   ],
   declarations: [
     AppComponent,
@@ -37,9 +49,20 @@ import {Ng2Permission} from "angular2-permission/dist";
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective
+    AsideToggleDirective,
+    ErrorPageComponent
   ],
-  providers: [{
+  providers: [
+      GlobalService,
+      BranchService,
+      CompanyService,
+      CurrencyService,
+      CustomerService,
+      EmployeeService,
+      LocationService,
+      ProductService,
+      TransactionsService,
+      {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   }],

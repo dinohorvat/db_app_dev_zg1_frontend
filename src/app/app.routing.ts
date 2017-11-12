@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
+import {ErrorPageComponent} from "./components/error-page/error-page.component";
 
 export const routes: Routes = [
   {
@@ -10,6 +11,7 @@ export const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
+  { path: 'error', component: ErrorPageComponent},
   {
     path: '',
     component: FullLayoutComponent,

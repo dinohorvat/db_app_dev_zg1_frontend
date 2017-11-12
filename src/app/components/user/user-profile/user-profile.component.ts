@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {CustomerService} from "../../../services/assets/customer.service";
+import {CustomerModel} from "../../../model/customer.model";
+import {PermissionService} from "angular2-permission/dist";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-profile',
@@ -7,9 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  customer: CustomerModel;
+  constructor(private router: Router, private _permissionService: PermissionService, private customerService: CustomerService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    if(this.checkPermission()){
+      this.setCustomer();
+    }
+    else{
+      this.router.navigate(["/error"]);
+    }
+  }
+
+  checkPermission(){
+    return this._permissionService.hasDefined('User'); // true or false
+  }
+
+  setCustomer(){
+    Promise.resolve(this.customerService.fetchCustomer("1"))
+        .then(response => {
+          console.log(response);
+          this.customer = response;
+        }).catch(err => alert(err.message || err));
   }
 
 }
