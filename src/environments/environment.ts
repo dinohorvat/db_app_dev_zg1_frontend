@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   endpoint: 'http://localhost:8080/dcs/',
   keyCloak: {
-    basicUrl:"http://localhost:8095/auth/realms/DxhDev/protocol/openid-connect",
+    basicUrl:"http://159.89.15.128:8080/auth/realms/DCS/protocol/openid-connect",
     clientId:"GUI"
   },
   applicationUrl:"http://localhost:4200"};
