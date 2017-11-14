@@ -17,9 +17,6 @@ import { AppRoutingModule } from './app.routing';
 
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
-import { ServiceInfoComponent } from './components/customer/service-info/service-info.component';
-import { RewardsComponent } from './components/customer/rewards/rewards.component';
-import { CustomerProfileComponent } from './components/customer/customer-profile/customer-profile.component';
 import {Ng2Permission} from "angular2-permission/dist";
 import {GlobalService} from "./services/global.service";
 import {BranchService} from "./services/assets/branch.service";
@@ -32,16 +29,19 @@ import {ProductService} from "./services/assets/product.service";
 import {TransactionsService} from "./services/assets/transactions.service";
 import {HttpModule} from "@angular/http";
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   imports: [
     BrowserModule,
+      BrowserAnimationsModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
     Ng2Permission,
       HttpModule
+
   ],
   declarations: [
     AppComponent,
@@ -50,7 +50,7 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
-    ErrorPageComponent
+    ErrorPageComponent,
   ],
   providers: [
       GlobalService,

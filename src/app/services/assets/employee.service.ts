@@ -15,7 +15,7 @@ export class EmployeeService {
 
     constructor(private http: Http) {
     }
-    fetchEmployee(entityId: string): Promise<EmployeeModel> {
+    fetchEmployee(entityId: number): Promise<EmployeeModel> {
         let url = environment.endpoint + '/employee/' + entityId;
         return this.http.get(url)
             .toPromise()

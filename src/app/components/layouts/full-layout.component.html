@@ -1,6 +1,6 @@
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
-    <a class="navbar-brand" href="#"></a>
+    <a id="myLogo" class="navbar-brand" href="#"></a>
     <ul class="nav navbar-nav hidden-md-down">
         <li class="nav-item">
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
@@ -32,7 +32,10 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/service-info']"><i class="icon-speedometer"></i> Employee Info </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/customer-profile']"><i class="icon-speedometer"></i> Emlpoyee Profile </a>
+                    <a class="nav-link" [routerLink]="['/customer-profile']"><i class="fa fa-user"></i> Employee Profile </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/employee-transactions']"><i class="fa fa-dollar"></i> Transactions </a>
                 </li>
             </ul>
         </nav>

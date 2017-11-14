@@ -8,7 +8,7 @@ import {PermissionService} from "angular2-permission/dist";
 export class FullLayoutComponent implements OnInit {
 
   constructor(private permissionService: PermissionService) {
-    this.permissionService.add('User'); //TODO: Poziv iz keycloaka za rolu?
+    this.permissionService.add('Employee'); //TODO: Poziv iz keycloaka za rolu?
   }
 
   public disabled:boolean = false;

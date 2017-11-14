@@ -31,6 +31,10 @@ export const routes: Routes = [
         path: 'rewards',
         loadChildren: './components/customer/rewards/rewards.module#RewardsModule'
       },
+      {
+        path: 'employee-transactions',
+        loadChildren: './components/employee/employee-transactions/employee-transactions.module#EmployeeTransactionsModule'
+      },
     ]
   }
 ];

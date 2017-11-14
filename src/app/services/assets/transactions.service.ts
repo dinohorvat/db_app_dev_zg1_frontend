@@ -16,7 +16,7 @@ export class TransactionsService {
     constructor(private http: Http) {
     }
 
-    fetchTransactions(entityId: string): Promise<TransactionsModel> {
+    fetchTransactions(entityId: number): Promise<TransactionsModel> {
         let url = environment.endpoint + '/transactions/' + entityId;
         return this.http.get(url)
             .toPromise()

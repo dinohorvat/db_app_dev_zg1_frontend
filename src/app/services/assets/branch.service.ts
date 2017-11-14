@@ -13,6 +13,7 @@ export class BranchService {
     options = new RequestOptions({headers: this.headers});
     inflection = require('inflection');
 
+
     constructor(private http: Http) {
     }
 
