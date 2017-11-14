@@ -21,15 +21,15 @@ export const routes: Routes = [
     children: [
       {
         path: 'service-info',
-        loadChildren: './components/user/service-info/service-info.module#ServiceInfoModule'
+        loadChildren: './components/customer/service-info/service-info.module#ServiceInfoModule'
       },
       {
-        path: 'user-profile',
-        loadChildren: './components/user/user-profile/user-profile.module#UserProfileModule'
+        path: 'customer-profile',
+        loadChildren: './components/customer/customer-profile/customer-profile.module#UserProfileModule'
       },
       {
         path: 'rewards',
-        loadChildren: './components/user/rewards/rewards.module#RewardsModule'
+        loadChildren: './components/customer/rewards/rewards.module#RewardsModule'
       },
     ]
   }

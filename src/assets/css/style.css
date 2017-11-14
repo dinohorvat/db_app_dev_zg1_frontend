@@ -7090,7 +7090,7 @@ body .fc {
   background: #fcf8e3; }
 
 .fc-highlight {
-  /* when user is selecting cells */
+  /* when customer is selecting cells */
   background: #bce8f1;
   opacity: .3;
   filter: alpha(opacity=30);
@@ -7650,7 +7650,7 @@ a.fc-more:hover {
   padding-top: 1px;
   /* add a pixel to make sure there are 2px padding above events */
   padding-bottom: 1em;
-  /* ensure a space at bottom of cell for user selecting/clicking */ }
+  /* ensure a space at bottom of cell for customer selecting/clicking */ }
 
 .fc-basic-view .fc-body .fc-row {
   min-height: 4em;

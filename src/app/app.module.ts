@@ -17,9 +17,9 @@ import { AppRoutingModule } from './app.routing';
 
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
-import { ServiceInfoComponent } from './components/user/service-info/service-info.component';
-import { RewardsComponent } from './components/user/rewards/rewards.component';
-import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ServiceInfoComponent } from './components/customer/service-info/service-info.component';
+import { RewardsComponent } from './components/customer/rewards/rewards.component';
+import { CustomerProfileComponent } from './components/customer/customer-profile/customer-profile.component';
 import {Ng2Permission} from "angular2-permission/dist";
 import {GlobalService} from "./services/global.service";
 import {BranchService} from "./services/assets/branch.service";
