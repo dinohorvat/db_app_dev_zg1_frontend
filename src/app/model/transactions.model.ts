@@ -1,3 +1,4 @@
+import {DcsDate} from "./dcs-date";
 /**
  * Created by dinohorvat on 12/11/2017.
  */
@@ -8,5 +9,5 @@ export class TransactionsModel {
     branch: any;
     transactionItems: any;
     hstTransactions: any;
-    dcsDate: any;
+    dcsDate: DcsDate = new DcsDate;
 }

@@ -15,11 +15,13 @@ export class EmployeeTransactionsComponent implements OnInit {
   private employee: EmployeeModel;
   private previousTransaction: TransactionsModel [];
   private selectedTransaction: TransactionsModel;
+  private recoverSelectedTransaction: TransactionsModel;
 
   constructor(private employeeService: EmployeeService, private transactionsService: TransactionsService) { }
 
   ngOnInit() {
     this.selectedTransaction = new TransactionsModel;
+    this.recoverSelectedTransaction = new TransactionsModel;
     this.loadEmployeeInfo();
   }
 
@@ -39,7 +41,10 @@ export class EmployeeTransactionsComponent implements OnInit {
     if(this.selectedTransaction.id != selectedTransactionId){
       Promise.resolve(this.transactionsService.fetchTransactions(selectedTransactionId)).then(response => {
         this.selectedTransaction = response;
+        this.recoverSelectedTransaction = Object.assign({},response);
       });
+    }else {
+      this.selectedTransaction = Object.assign({}, this.recoverSelectedTransaction);
     }
   }
 }
