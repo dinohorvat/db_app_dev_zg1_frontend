@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
@@ -30,17 +30,20 @@ import {TransactionsService} from "./services/assets/transactions.service";
 import {HttpModule} from "@angular/http";
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {KeyCloakService} from "./services/keycloak/keycloak.service";
+import { LoginScreenComponent } from './components/login/login-screen/login-screen.component';
+import { LogoutScreenComponent } from './components/login/logout-screen/logout-screen.component';
 
 @NgModule({
   imports: [
     BrowserModule,
-      BrowserAnimationsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
     Ng2Permission,
-      HttpModule
+    HttpModule
 
   ],
   declarations: [
@@ -51,6 +54,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
     ErrorPageComponent,
+    LoginScreenComponent,
+    LogoutScreenComponent,
   ],
   providers: [
       GlobalService,
@@ -62,9 +67,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       LocationService,
       ProductService,
       TransactionsService,
+      KeyCloakService,
       {
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
+    useClass: PathLocationStrategy
   }],
   bootstrap: [ AppComponent ]
 })

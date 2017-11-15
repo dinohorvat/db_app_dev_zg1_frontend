@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
 import {ErrorPageComponent} from "./components/error-page/error-page.component";
+import {LoginScreenComponent} from "./components/login/login-screen/login-screen.component";
+import {LogoutScreenComponent} from "./components/login/logout-screen/logout-screen.component";
 
 export const routes: Routes = [
   {
@@ -11,6 +13,8 @@ export const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
+  { path: 'login', component: LoginScreenComponent},
+  { path: 'logout', component: LogoutScreenComponent},
   { path: 'error', component: ErrorPageComponent},
   {
     path: '',

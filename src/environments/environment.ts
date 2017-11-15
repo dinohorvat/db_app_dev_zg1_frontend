@@ -8,7 +8,7 @@ export const environment = {
   endpoint: 'http://159.89.15.128:8001/dcs/',
   keyCloak: {
     basicUrl:"http://159.89.15.128:8080/auth/realms/DCS/protocol/openid-connect",
-    clientId:"DCS"
+    clientId:"DCS-GUI"
   },
   applicationUrl:"http://localhost:4200"
 };
