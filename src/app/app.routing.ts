@@ -8,11 +8,7 @@ import {LoginScreenComponent} from "./components/login/login-screen/login-screen
 import {LogoutScreenComponent} from "./components/login/logout-screen/logout-screen.component";
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginScreenComponent},
   { path: 'logout', component: LogoutScreenComponent},
   { path: 'error', component: ErrorPageComponent},
