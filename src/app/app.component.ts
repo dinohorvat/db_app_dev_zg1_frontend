@@ -6,7 +6,7 @@ import { isNullOrUndefined } from "util";
 
 @Component({
     selector: 'body',
-    template: '<router-outlet></router-outlet>'
+    template: '<router-outlet><toaster-container [toasterconfig]="toasterconfig"></toaster-container></router-outlet>'
 })
 export class AppComponent {
     private user: any;
@@ -15,9 +15,6 @@ export class AppComponent {
     }
 
     ngOnInit(): void {
-        // this.user = this.keyCloakService.getUser();
-        // if (isNullOrUndefined(this.user)) {
-        //     this.router.navigate(["/login"]);
-        // }
+
     }
 }

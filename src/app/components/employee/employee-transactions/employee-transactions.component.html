@@ -5,7 +5,8 @@
       <div class="col-md-12 mb-2">
          <!-- Nav tabs -->
          <tabset>
-            <tab heading="Previous Transactions">
+            <tab>
+               <ng-template tabHeading><i class="fa fa-list"></i> History Transactions &nbsp;</ng-template>
                <div class="card-block">
                   <table class="table table-striped table-hover table-outline mb-0 hidden-sm-down">
                      <thead>
@@ -30,25 +31,51 @@
                   </table>
                </div>
             </tab>
-            <tab heading="Profile">
-               2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-               et dolore
-               magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-               commodo
-               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-               pariatur.
-               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-               laborum.
-            </tab>
-            <tab heading="Messages">
-               3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-               et dolore
-               magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-               commodo
-               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-               pariatur.
-               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-               laborum.
+            <tab>
+               <ng-template tabHeading><i class="fa fa-users"></i> Customers &nbsp;</ng-template>
+               <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                     <div class="card card-accent-warning">
+                        <div class="card-header">
+                           Customer Search
+                        </div>
+                        <div class="card-block">
+                           <div class="form-horizontal">
+                              <div class="form-group row">
+                                 <div class="col-md-3 col-sm-12"><input class="form-control" type="text" placeholder="e-Mail" [(ngModel)]="searchCustomer.email"></div>
+                                 <div class="col-md-3 col-sm-12"><input class="form-control" type="text" placeholder="First name" [(ngModel)]="searchCustomer.firstname"></div>
+                                 <div class="col-md-3 col-sm-12"><input class="form-control" type="text" placeholder="Last name" [(ngModel)]="searchCustomer.lastname"></div>
+                                 <button (click)="search()" type="button" style="margin-right: 0.9%" class="btn btn-primary col-md-1 col-sm-12"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                 <button (click)="resetSearch()" type="button" class="btn btn-warning col-md-1 col-sm-12"><i class="fa fa-eraser"></i>&nbsp;Clear</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div><!--row-->
+
+               <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                     <div class="card card-accent-success">
+                        <div class="card-header">
+                           Register Customer
+                        </div>
+                        <div class="card-block">
+                           <div class="form-horizontal">
+                              <div class="form-group row">
+                                 <div class="card-block">
+                                    <p>Register new customer into the system.</p>
+
+                                    <p><b>This action will create new customer profile.</b></p>
+
+                                    <button (click)="resetCreateForm(); registerModal.show()" class="btn btn-sm btn-success"><i class="fa fa-user-plus"></i> Register</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </tab>
          </tabset>
       </div><!--/.col-->
@@ -68,7 +95,8 @@
          </div>
          <div class="modal-body">
             <tabset>
-               <tab heading="Basic Information">
+               <tab>
+                  <ng-template tabHeading><i class="fa fa-wrench"></i> General &nbsp;</ng-template>
                   <div class="card-block">
                      <div class="form-horizontal">
                         <div class="form-group row">
@@ -81,12 +109,12 @@
                         </div>
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Total Price:</label>
-                           <div class="col-md-9 col-sm-6"><input class="form-control" type="number" [(ngModel)]="selectedTransaction.totalPrice"></div>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="number" [(ngModel)]="selectedTransaction.totalPrice"></div>
                         </div>
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Transaction Placed:</label>
                            <div class="col-md-9 col-sm-6">
-                              <input class="form-control" type="datetime" [(ngModel)]="selectedTransaction.dcsDate.transactionPlaced">
+                              <input class="form-control" type="datetime" disabled [(ngModel)]="selectedTransaction.dcsDate.transactionPlaced">
                            </div>
                         </div>
                         <div class="form-group row">
@@ -98,29 +126,95 @@
                      </div>
                   </div>
                </tab>
-               <tab heading="Profile">
-                  2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                  labore
-                  et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                  commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla
-                  pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                  laborum.
+               <tab>
+                  <ng-template tabHeading><i class="fa fa-user"></i> Customer &nbsp;</ng-template>
+                  <div class="card-block">
+                     <div class="form-horizontal">
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">Customer ID:</label>
+                           <label class="col-md-9 col-sm-6 form-control-label">{{transactionCustomer.id}}</label>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">First Name:</label>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.firstname"></div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">Last Name:</label>
+                           <div class="col-md-9 col-sm-6"><input  disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.lastname"></div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">Phone:</label>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.phone"></div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">Address:</label>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.address"></div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">City:</label>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.city"></div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-3 col-sm-6 form-control-label">E-mail:</label>
+                           <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="transactionCustomer.email"></div>
+                        </div>
+                     </div>
+                  </div>
                </tab>
-               <tab heading="Messages">
-                  3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                  labore
-                  et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                  commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla
-                  pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                  laborum.
+               <tab>
+                  <ng-template tabHeading><i class="fa fa-navicon"></i> Transaction Items &nbsp;</ng-template>
+                  <table class="table table-striped table-hover table-outline mb-0 hidden-sm-down">
+                     <thead>
+                     <tr>
+                        <th class="text-center">Product ID</th>
+                        <th class="text-center">Product Name</th>
+                        <th class="text-center">Product Description</th>
+                        <th class="text-center">Product Price</th>
+                        <th class="text-center"></th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr *ngFor="let item of selectedTransaction.transactionItems">
+                        <td class="text-center">{{item.product.id}}</td>
+                        <td class="text-center">{{item.product.name}}</td>
+                        <td class="text-center">{{item.product.description}}</td>
+                        <td class="text-center">{{item.product.price}}</td>
+                     </tr>
+                     </tbody>
+                  </table>
+
+               </tab>
+               <tab>
+                  <ng-template tabHeading><i class="fa fa-hourglass-2"></i> Transaction History &nbsp;</ng-template>
+                  <table class="table table-striped table-hover table-outline mb-0 hidden-sm-down">
+                     <thead>
+                     <tr>
+                        <th class="text-center">Transaction ID</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Transaction Placed</th>
+                        <th class="text-center">Employee Username</th>
+                        <th class="text-center">Branch Name</th>
+                        <th class="text-center">Transaction Exp. Comp.</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Total price</th>
+                        <th class="text-center"></th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr *ngFor="let transaction of selectedTransaction.hstTransactions">
+                        <td class="text-center">{{transaction.id}}</td>
+                        <td class="text-center">{{transaction.changeDesc}}</td>
+                        <td class="text-center">{{transaction.transactionPlaced}}</td>
+                        <td class="text-center">{{transaction.employeeUsername}}</td>
+                        <td class="text-center">{{transaction.branchName}}</td>
+                        <td class="text-center">{{transaction.transactionExpCompleted}}</td>
+                        <td class="text-center">
+                           <span class="badge badge-success">{{transaction.status}}</span>
+                        </td>
+                        <td class="text-center">{{transaction.totalPrice}}</td>
+                     </tr>
+                     </tbody>
+                  </table>
                </tab>
             </tabset>
          </div>
@@ -131,3 +225,58 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div bsModal #registerModal="bs-modal" id="registerModal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="transactionModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-info modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Register New Customer</h4>
+            <button type="button" class="close" (click)="registerModal.hide()" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="form-horizontal">
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">First name: </label>
+                  <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="createCustomer.firstname"></div>
+               </div>
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Last name:</label>
+                  <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="createCustomer.lastname"></div>
+               </div>
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">e-Mail:</label>
+                  <div class="col-md-9 col-sm-6">
+                     <input class="form-control" type="text"  [(ngModel)]="createCustomer.email">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Phone number:</label>
+                  <div class="col-md-9 col-sm-6">
+                     <input class="form-control" type="text"  [(ngModel)]="createCustomer.phone">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Address:</label>
+                  <div class="col-md-9 col-sm-6">
+                     <input class="form-control" type="text" [(ngModel)]="createCustomer.address">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">City:</label>
+                  <div class="col-md-9 col-sm-6">
+                     <input class="form-control" type="text" [(ngModel)]="createCustomer.city">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" (click)="registerModal.hide()">Close</button>
+         <button (click)="registerCustomer()" type="button" class="btn btn-success">Create</button>
+            <button (click)="resetCreateForm()" type="button" class="btn btn-warning">Reset</button>
+      </div>
+      </div>
+   </div>
+</div>

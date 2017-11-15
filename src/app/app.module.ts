@@ -33,6 +33,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {KeyCloakService} from "./services/keycloak/keycloak.service";
 import { LoginScreenComponent } from './components/login/login-screen/login-screen.component';
 import { LogoutScreenComponent } from './components/login/logout-screen/logout-screen.component';
+import { EmployeeProfileComponent } from './components/employee/employee-profile/employee-profile.component';
+import {ToasterModule, ToasterService} from "angular2-toaster";
 
 @NgModule({
   imports: [
@@ -43,8 +45,8 @@ import { LogoutScreenComponent } from './components/login/logout-screen/logout-s
     TabsModule.forRoot(),
     ChartsModule,
     Ng2Permission,
-    HttpModule
-
+    HttpModule,
+    ToasterModule
   ],
   declarations: [
     AppComponent,
@@ -68,6 +70,7 @@ import { LogoutScreenComponent } from './components/login/logout-screen/logout-s
       ProductService,
       TransactionsService,
       KeyCloakService,
+      ToasterService,
       {
     provide: LocationStrategy,
     useClass: PathLocationStrategy

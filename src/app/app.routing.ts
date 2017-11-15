@@ -35,6 +35,10 @@ export const routes: Routes = [
         path: 'employee-transactions',
         loadChildren: './components/employee/employee-transactions/employee-transactions.module#EmployeeTransactionsModule'
       },
+      {
+        path: 'employee-profile',
+        loadChildren: './components/employee/employee-profile/employee-profile.module#EmployeeProfileModule'
+      },
     ]
   }
 ];

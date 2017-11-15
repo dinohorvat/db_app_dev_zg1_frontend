@@ -7,6 +7,6 @@ export class EmployeeModel {
     lastname: string;
     email: string;
     transactions: TransactionsModel[];
-    brahcn: BranchModel;
+    branch: BranchModel = new BranchModel;
     hstEmployees: any;
 }

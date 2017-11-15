@@ -1,0 +1,75 @@
+<div class="animated fadeIn">
+  <h3 class="component-title">Employee Profile</h3>
+
+  <div class="col-md-12 mb-2">
+    <!-- Nav tabs -->
+    <tabset>
+      <tab>
+        <ng-template tabHeading><i class="fa fa-wrench"></i> General &nbsp;</ng-template>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="card card-accent-primary">
+                <div class="card-header">
+                  Profile Information
+                </div>
+                <div class="card-block">
+                  <div class="form-horizontal">
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Employee ID:</label>
+                      <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.id"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Employee Username: </label>
+                      <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.username"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Employee First Name:</label>
+                      <div  class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.firstname"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Employee Last Name:</label>
+                      <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.lastname"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Employee e-Mail:</label>
+                      <div  class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.email"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--/.col-->
+
+          </div><!--row-->
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="card card-accent-warning">
+                <div class="card-header">
+                  Branch Information
+                </div>
+                <div class="card-block">
+                  <div class="form-horizontal">
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Branch ID:</label>
+                      <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.branch.id"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Branch Code: </label>
+                      <div class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.branch.code"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Branch Name:</label>
+                      <div  class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="employee.branch.name"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--/.col-->
+
+          </div> <!--row-->
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+

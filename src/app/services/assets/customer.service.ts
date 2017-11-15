@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {CustomerModel} from "../../model/customer.model";
 import {environment} from "../../../environments/environment";
 import 'rxjs/add/operator/toPromise';
+import {GlobalService} from "../global.service";
 /**
  * Created by dinohorvat on 11/11/2017.
  */
@@ -13,7 +14,7 @@ export class CustomerService {
     options = new RequestOptions({headers: this.headers});
     inflection = require('inflection');
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private globalService: GlobalService) {
     }
 
     fetchCustomer(entityId: string): Promise<CustomerModel> {
@@ -24,6 +25,11 @@ export class CustomerService {
                 return response.json().body as CustomerModel;
             })
             .catch(this.handleError);
+    }
+
+
+    saveCustomer(ifEdit: boolean, entity: CustomerModel): Promise<CustomerModel>{
+        return this.globalService.saveEntity(ifEdit, 'customer', entity);
     }
 
     private handleError(error: any): Promise<any> {

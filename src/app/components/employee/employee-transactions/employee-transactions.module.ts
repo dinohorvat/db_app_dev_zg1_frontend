@@ -15,7 +15,7 @@ import {FormsModule} from "@angular/forms";
         CommonModule,
         Ng2BootstrapModule,
         ModalModule.forRoot(),
-        FormsModule
+        FormsModule,
     ],
     declarations: [ EmployeeTransactionsComponent ]
 })
