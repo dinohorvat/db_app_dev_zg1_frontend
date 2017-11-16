@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {CustomerService} from "../../../services/assets/customer.service";
 import {CustomerModel} from "../../../model/customer.model";
-import {PermissionService} from "angular2-permission/dist";
+import {PermissionService} from "angular2-permission";
 import {Router} from "@angular/router";
 
 @Component({
@@ -24,7 +24,7 @@ export class CustomerProfileComponent implements OnInit {
   }
 
   checkPermission(){
-    return this._permissionService.hasDefined('User'); // true or false
+    return this._permissionService.hasDefined('customer'); // true or false
   }
 
   setCustomer(){

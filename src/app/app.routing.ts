@@ -6,6 +6,8 @@ import { FullLayoutComponent } from './components/layouts/full-layout.component'
 import {ErrorPageComponent} from "./components/error-page/error-page.component";
 import {LoginScreenComponent} from "./components/login/login-screen/login-screen.component";
 import {LogoutScreenComponent} from "./components/login/logout-screen/logout-screen.component";
+import {HomeComponent} from "./components/home/home.component";
+import {PermissionGuard, IPermissionGuardModel} from "angular2-permission";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,12 +18,29 @@ export const routes: Routes = [
     path: '',
     component: FullLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'DCS',
+      Permission: {
+        Except: ['customer'],
+        RedirectTo: '403'
+      } as IPermissionGuardModel
     },
+    canActivate: [PermissionGuard],
+
     children: [
       {
         path: 'service-info',
-        loadChildren: './components/customer/service-info/service-info.module#ServiceInfoModule'
+        loadChildren: './components/customer/service-info/service-info.module#ServiceInfoModule',
+        canActivate: [PermissionGuard],
+        data: {
+          Permission: {
+            Except: ['customer'],
+            RedirectTo: 'error'
+          } as IPermissionGuardModel
+        },
+      },
+      {
+        path: 'home',
+        loadChildren: './components/home/home.module#HomeModule'
       },
       {
         path: 'customer-profile',
@@ -33,7 +52,7 @@ export const routes: Routes = [
       },
       {
         path: 'employee-transactions',
-        loadChildren: './components/employee/employee-transactions/employee-transactions.module#EmployeeTransactionsModule'
+        loadChildren: './components/employee/employee-transactions/employee-transactions.module#EmployeeTransactionsModule',
       },
       {
         path: 'employee-profile',

@@ -17,7 +17,7 @@ import { AppRoutingModule } from './app.routing';
 
 //Layouts
 import { FullLayoutComponent } from './components/layouts/full-layout.component';
-import {Ng2Permission} from "angular2-permission/dist";
+import {Ng2Permission, PermissionGuard, PermissionService} from "angular2-permission";
 import {GlobalService} from "./services/global.service";
 import {BranchService} from "./services/assets/branch.service";
 import {CompanyService} from "./services/assets/company.service";
@@ -35,6 +35,7 @@ import { LoginScreenComponent } from './components/login/login-screen/login-scre
 import { LogoutScreenComponent } from './components/login/logout-screen/logout-screen.component';
 import { EmployeeProfileComponent } from './components/employee/employee-profile/employee-profile.component';
 import {ToasterModule, ToasterService} from "angular2-toaster";
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,8 @@ import {ToasterModule, ToasterService} from "angular2-toaster";
       TransactionsService,
       KeyCloakService,
       ToasterService,
+      PermissionGuard,
+      PermissionService,
       {
     provide: LocationStrategy,
     useClass: PathLocationStrategy

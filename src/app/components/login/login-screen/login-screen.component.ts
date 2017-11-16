@@ -24,8 +24,7 @@ export class LoginScreenComponent implements OnInit {
         .then(response => {
           if(!isNullOrUndefined(response)){
             this.user = this.keyCloakService.getUser();
-            console.log(this.user);
-            this.router.navigate(["/employee-transactions"]);
+            this.router.navigate(["/home"]);
           }
         })
         .catch(error => {

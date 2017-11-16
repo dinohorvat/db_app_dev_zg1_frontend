@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {PermissionService} from "angular2-permission/dist";
+import {PermissionService} from "angular2-permission";
+import {KeyCloakService} from "../../services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'full-layout.component.html'
 })
 export class FullLayoutComponent implements OnInit {
+  user: any;
 
-  constructor(private permissionService: PermissionService) {
-    this.permissionService.add('Employee'); //TODO: Poziv iz keycloaka za rolu?
+  constructor(private permissionService: PermissionService, keyCloakService: KeyCloakService) {
+    this.user = keyCloakService.getUser();
+    console.log(this.user);
+    for(var i=0; i<this.user.roles.length; i++){
+      console.log(this.user.roles[i]);
+      this.permissionService.add(this.user.roles[i]);
+    }
   }
 
   public disabled:boolean = false;

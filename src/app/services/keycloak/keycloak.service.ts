@@ -97,7 +97,7 @@ export class KeyCloakService {
         if (token) {
             this.user = new User();
             this.user.username = this.jwtHelper.decodeToken(this.retrieveToken().id_token).preferred_username;
-            console.log(this.jwtHelper.decodeToken(this.retrieveToken().id_token));
+            this.user.roles = this.jwtHelper.decodeToken(this.retrieveToken().access_token).realm_access.roles;
         }
         return this.user;
     }
@@ -301,7 +301,7 @@ class User {
     username: string;
     firstName: string;
     lastName: string
-    role: string;
+    roles: any;
 
 }
 class Token {

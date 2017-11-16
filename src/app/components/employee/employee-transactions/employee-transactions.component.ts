@@ -6,6 +6,8 @@ import {TransactionsService} from "../../../services/assets/transactions.service
 import {CustomerModel} from "../../../model/customer.model";
 import {CustomerService} from "../../../services/assets/customer.service";
 import {GlobalService} from "../../../services/global.service";
+import {PermissionService} from "angular2-permission";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -25,21 +27,34 @@ export class EmployeeTransactionsComponent implements OnInit {
   private customerSearchResults: CustomerModel[];
   private createCustomer: CustomerModel;
 
-  constructor(private employeeService: EmployeeService, private transactionsService: TransactionsService,
+  constructor(private router: Router, private _permissionService: PermissionService, private employeeService: EmployeeService, private transactionsService: TransactionsService,
               private customerService: CustomerService, private globalService: GlobalService) {
-  }
+    if(this.checkPermission()) {
+
+    }
+    else{
+      this.router.navigate(["/error"]);
+    }
+
+    }
 
   ngOnInit() {
-    this.searchCustomer = new CustomerModel;
-    this.selectedTransaction = new TransactionsModel;
-    this.recoverSelectedTransaction = new TransactionsModel;
-    this.transactionCustomer = new CustomerModel;
-    this.customerSearchResults = new Array<CustomerModel>();
-    this.createCustomer = new CustomerModel;
-    this.loadEmployeeInfo();
+    if(this.checkPermission()) {
+      this.searchCustomer = new CustomerModel;
+      this.selectedTransaction = new TransactionsModel;
+      this.recoverSelectedTransaction = new TransactionsModel;
+      this.transactionCustomer = new CustomerModel;
+      this.customerSearchResults = new Array<CustomerModel>();
+      this.createCustomer = new CustomerModel;
+      this.loadEmployeeInfo();
+    }
+    else{
+    }
   }
 
-
+  checkPermission(){
+    return this._permissionService.hasDefined('employee'); // true or false
+  }
   private loadEmployeeInfo(){
     Promise.resolve(this.employeeService.fetchEmployee(1)).then(response => {
       this.employee = response;
