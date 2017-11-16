@@ -59,6 +59,11 @@ export const routes: Routes = [
         path: 'employee-profile',
         loadChildren: './components/employee/employee-profile/employee-profile.module#EmployeeProfileModule'
       },
+      {
+        path: 'create-transaction',
+        loadChildren: './components/employee/create-transaction/create-transaction.module#CreateTransactionModule'
+      },
+
     ]
   }
 ];

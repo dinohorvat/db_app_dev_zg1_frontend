@@ -36,6 +36,7 @@ import { LogoutScreenComponent } from './components/login/logout-screen/logout-s
 import { EmployeeProfileComponent } from './components/employee/employee-profile/employee-profile.component';
 import {ToasterModule, ToasterService} from "angular2-toaster";
 import { HomeComponent } from './components/home/home.component';
+import { CreateTransactionComponent } from './components/employee/create-transaction/create-transaction.component';
 
 @NgModule({
   imports: [
