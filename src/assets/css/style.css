@@ -9227,7 +9227,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   height: 44px; }
 
 /**
-* Adjust height and line-height for .select2-search-field amd multi-select Select2 widgets.
+* Adjust height and line-height for .select2-searchCustomers-field amd multi-select Select2 widgets.
 *
 * 1. Class repetition to address missing .select2-chosen in Select2 < 3.3.2.
 */
@@ -9549,10 +9549,10 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 /**
 * Address Select2's loading indicator position - which should not stick
-* to the right edge of Select2's search input.
+* to the right edge of Select2's searchCustomers input.
 *
-* 1. in .select2-search input
-* 2. in Multi Select2's .select2-search-field input
+* 1. in .select2-searchCustomers input
+* 2. in Multi Select2's .select2-searchCustomers-field input
 * 3. in the status-message of infinite-scroll with remote data (@see http://ivaynberg.github.io/select2/#infinite)
 *
 * These styles alter Select2's default background-position of 100%
@@ -9598,7 +9598,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 * Version: 0.13.1 - 2015-09-30T05:39:26.659Z
 * License: MIT
 */
-/* Style when highlighting a search. */
+/* Style when highlighting a searchCustomers. */
 .ui-select-highlight {
   font-weight: bold; }
 

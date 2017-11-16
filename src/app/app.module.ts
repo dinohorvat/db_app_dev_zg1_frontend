@@ -47,7 +47,7 @@ import { HomeComponent } from './components/home/home.component';
     ChartsModule,
     Ng2Permission,
     HttpModule,
-    ToasterModule
+    ToasterModule,
   ],
   declarations: [
     AppComponent,

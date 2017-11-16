@@ -26,6 +26,7 @@ export const routes: Routes = [
     },
     canActivate: [PermissionGuard],
 
+
     children: [
       {
         path: 'service-info',

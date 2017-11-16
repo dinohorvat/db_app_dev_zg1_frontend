@@ -8,6 +8,8 @@ import {CustomerService} from "../../../services/assets/customer.service";
 import {GlobalService} from "../../../services/global.service";
 import {PermissionService} from "angular2-permission";
 import {Router} from "@angular/router";
+import {resource} from "selenium-webdriver/http";
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -26,6 +28,8 @@ export class EmployeeTransactionsComponent implements OnInit {
   private searchCustomer: CustomerModel;
   private customerSearchResults: CustomerModel[];
   private createCustomer: CustomerModel;
+  private showSearchResults: boolean = false;
+  private selectedCustomer: CustomerModel ;
 
   constructor(private router: Router, private _permissionService: PermissionService, private employeeService: EmployeeService, private transactionsService: TransactionsService,
               private customerService: CustomerService, private globalService: GlobalService) {
@@ -46,6 +50,7 @@ export class EmployeeTransactionsComponent implements OnInit {
       this.transactionCustomer = new CustomerModel;
       this.customerSearchResults = new Array<CustomerModel>();
       this.createCustomer = new CustomerModel;
+      this.selectedCustomer = new CustomerModel;
       this.loadEmployeeInfo();
     }
     else{
@@ -86,6 +91,7 @@ export class EmployeeTransactionsComponent implements OnInit {
 
   public resetSearch(){
     this.searchCustomer = new CustomerModel;
+    this.showSearchResults = false;
   }
 
   public resetCreateForm(){
@@ -100,7 +106,29 @@ export class EmployeeTransactionsComponent implements OnInit {
   }
 
 
-  public search(){
-    alert('Search!');
+  public searchCustomers(){
+    Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
+      if(!isNullOrUndefined(resource)){
+        this.customerSearchResults = new Array<CustomerModel>();
+        this.customerSearchResults.push(resource);
+        this.globalService.showSuccess("Success", "Results found.");
+        this.showSearchResults = true;
+      }else {
+        this.globalService.showWarning("Not Found", "No results found.");
+      }
+    });
+  }
+
+
+  public showCustomerDetails(customer: CustomerModel){
+    this.selectedCustomer = customer;
+  }
+
+  public switchToCustomer(customerId: number){
+    Promise.resolve(this.customerService.fetchCustomer(customerId)).then(resource =>{
+      if(!isNullOrUndefined(resource)) {
+        this.selectedCustomer = resource;
+      }
+    });
   }
 }

@@ -4,5 +4,5 @@
 export class RewardPointsModel{
     id: number;
     amount: number;
-    occured: string;
+    occurred: string;
 }

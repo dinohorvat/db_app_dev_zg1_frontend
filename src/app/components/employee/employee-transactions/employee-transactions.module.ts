@@ -4,6 +4,7 @@ import {EmployeeTransactionsComponent} from "./employee-transactions.component";
 import {CommonModule} from "@angular/common";
 import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
 import {FormsModule} from "@angular/forms";
+import {CalendarModule} from 'primeng/primeng';
 /**
  * Created by HrvojeGrgic on 14/11/2017.
  */
@@ -16,6 +17,7 @@ import {FormsModule} from "@angular/forms";
         Ng2BootstrapModule,
         ModalModule.forRoot(),
         FormsModule,
+        CalendarModule,
     ],
     declarations: [ EmployeeTransactionsComponent ]
 })

@@ -17,14 +17,16 @@ export class CustomerService {
     constructor(private http: Http, private globalService: GlobalService) {
     }
 
-    fetchCustomer(entityId: string): Promise<CustomerModel> {
+    fetchCustomer(entityId: number): Promise<CustomerModel> {
         let url = environment.endpoint + '/customer/' + entityId;
         return this.http.get(url)
             .toPromise()
             .then(response => {
                 return response.json().body as CustomerModel;
             })
-            .catch(this.handleError);
+            .catch(reason => {
+                this.handleError
+            });
     }
 
 

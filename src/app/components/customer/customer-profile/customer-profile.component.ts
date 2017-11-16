@@ -28,7 +28,7 @@ export class CustomerProfileComponent implements OnInit {
   }
 
   setCustomer(){
-    Promise.resolve(this.customerService.fetchCustomer("1"))
+    Promise.resolve(this.customerService.fetchCustomer(1))
         .then(response => {
           console.log(response);
           this.customer = response;
