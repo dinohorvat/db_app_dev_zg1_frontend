@@ -6,7 +6,7 @@ import {TransactionItem} from "./transaction-item";
  */
 export class TransactionsModel {
     id: number;
-    totalPrice: number;
+    totalPrice: number = 0;
     status: string;
     branch: any;
     transactionItems: TransactionItem[] = new Array<TransactionItem>();

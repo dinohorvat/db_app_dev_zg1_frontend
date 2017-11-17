@@ -4,6 +4,6 @@
 
 export class DcsDate{
 
-     transactionPlaced;
-     transactionExpCompleted;
+     transactionPlaced: Date;
+     transactionExpCompleted: Date;
 }

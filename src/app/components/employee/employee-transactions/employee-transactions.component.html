@@ -82,7 +82,7 @@
                               </div>
                            </div>
                         </div>
-                     </div>
+                     </div><!--search-->
                   </div>
                </div><!--row-->
 
@@ -146,15 +146,14 @@
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Transaction Placed:</label>
                            <div class="col-md-9 col-sm-6">
-                              <!--TODO: date picker-->
-                              <input class="form-control" type="datetime" disabled [(ngModel)]="selectedTransaction.dcsDate.transactionPlaced">
+                              <input class="form-control" type="datetime-local" disabled [(ngModel)]="selectedTransaction.dcsDate.transactionPlaced">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Transaction Expected Completed:</label>
                            <div class="col-md-9 col-sm-6">
-                              <!--TODO: date picker-->
-                              <input class="form-control" type="datetime" [(ngModel)]="selectedTransaction.dcsDate.transactionExpCompleted">
+                              <input class="form-control" type="datetime-local" [(ngModel)]="selectedTransaction.dcsDate.transactionExpCompleted">
+
                            </div>
                         </div>
                      </div>
@@ -434,9 +433,6 @@
                         <tr *ngFor="let reward of selectedCustomer.rewardPoints">
                            <td class="text-center">{{reward.amount}}</td>
                            <td class="text-center">{{reward.occurred}}</td>
-                           <!--TODO: date picker-->
-                           <!--<p-calendar [(ngModel)]="reward.occurred" dateFormat="dd.mm.yy" showTime="showTime"-->
-                                       <!--hourFormat="24" showIcon="true"></p-calendar>-->
                         </tr>
                         </tbody>
                      </table>

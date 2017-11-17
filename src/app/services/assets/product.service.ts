@@ -26,6 +26,16 @@ export class ProductService {
             .catch(this.handleError);
     }
 
+    fetchAllProducts(): Promise<ProductModel[]> {
+        let url = environment.endpoint + '/product/';
+        return this.http.get(url)
+            .toPromise()
+            .then(response => {
+                return response.json().body as ProductModel[];
+            })
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
     }
