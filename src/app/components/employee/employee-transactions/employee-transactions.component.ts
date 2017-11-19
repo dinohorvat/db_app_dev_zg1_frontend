@@ -32,7 +32,7 @@ export class EmployeeTransactionsComponent implements OnInit {
   private selectedCustomer: CustomerModel ;
 
   constructor(private router: Router, private _permissionService: PermissionService, private employeeService: EmployeeService, private transactionsService: TransactionsService,
-              private customerService: CustomerService, private globalService: GlobalService) {
+              private customerService: CustomerService, private globalService: GlobalService, private transactionService: TransactionsService) {
     if(this.checkPermission()) {
 
     }
@@ -128,6 +128,14 @@ export class EmployeeTransactionsComponent implements OnInit {
     Promise.resolve(this.customerService.fetchCustomer(customerId)).then(resource =>{
       if(!isNullOrUndefined(resource)) {
         this.selectedCustomer = resource;
+      }
+    });
+  }
+
+  public saveTransactions(){
+    Promise.resolve(this.transactionsService.saveTransactions(true, this.selectedTransaction)).then(response =>{
+      if(!isNullOrUndefined(response)){
+        this.globalService.showSuccess("Success", "Transaction Updated.");
       }
     });
   }

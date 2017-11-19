@@ -253,7 +253,7 @@
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="transactionModal.hide()">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" (click)="saveTransactions()" class="btn btn-primary">Save changes</button>
             <button type="button" class="btn btn-success" (click)="switchToCustomer(transactionCustomer.id); transactionModal.hide(); searchedCustomerModal.show()">Switch To Customer Profile</button>
          </div>
       </div><!-- /.modal-content -->
@@ -426,7 +426,7 @@
                         <thead>
                         <tr>
                            <th class="text-center">Amount</th>
-                           <th class="text-center">Occured</th>
+                           <th class="text-center">Occurred</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -58,7 +58,7 @@
 
       </wizard-step>
       <wizard-step [title]="'Add Products'" [isValid]="productList.length>0 &&
-         transaction.dcsDate.transactionExpCompleted != undefined" (onNext)="onStep1Next($event)">
+         transaction.dcsDate.transactionExpCompleted != undefined" (onNext)="onStep2Next($event)">
          <div class="col-sm-12 col-md-12">
             <div class="card card-accent-warning">
                <div class="card-header">

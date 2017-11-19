@@ -15,6 +15,7 @@ import {EmployeeService} from "../../../services/assets/employee.service";
 import {RewardPolicy} from "../../../model/reward-policy";
 import {TransactionItem} from "../../../model/transaction-item";
 import {RewardPointsModel} from "../../../model/reward-points.model";
+import {TransactionsService} from "../../../services/assets/transactions.service";
 
 @Component({
   selector: 'app-create-transaction',
@@ -54,7 +55,8 @@ export class CreateTransactionComponent implements OnInit {
 
   constructor(private customerService: CustomerService, private globalService: GlobalService,
               private productService: ProductService, private employeeService: EmployeeService,
-              private branchService: BranchService, private companyService: CompanyService ) { }
+              private branchService: BranchService, private companyService: CompanyService,
+              private transactionService: TransactionsService) { }
 
 
   ngOnInit() {
@@ -198,22 +200,20 @@ export class CreateTransactionComponent implements OnInit {
       this.transaction.transactionItems.push(transactionItem);
     }
 
-    Promise.resolve(this.globalService.saveEntity(false, "transactions", this.transaction)).then(response =>{
+    Promise.resolve(this.transactionService.saveTransactions(false, this.transaction)).then(response =>{
 
       if(!isNullOrUndefined(response)){
           let totalNegativePoints = 0;
           for(let policy of this.appliedPoliciesList){
             totalNegativePoints += policy.numPoints
           }
-          totalNegativePoints*=-1;
 
+          totalNegativePoints*=-1;
           var negativeReward: RewardPointsModel = new RewardPointsModel;
           negativeReward.amount = totalNegativePoints;
-          negativeReward.transactionId = response.id;
 
           var earnedPoints: RewardPointsModel = new RewardPointsModel;
           earnedPoints.amount = this.tempEarnedCustomerPoints;
-          earnedPoints.transactionId = response.id;
 
           this.selectedCustomer.rewardPoints.push(negativeReward);
           this.selectedCustomer.rewardPoints.push(earnedPoints);
@@ -229,7 +229,6 @@ export class CreateTransactionComponent implements OnInit {
 
   showHidden(){
     if(!this.showHiddenStep){
-      this.calculateTotalPointsOfCustomer();
       this.showHiddenStep = true;
     }else {
       this.showHiddenStep = false;
@@ -240,6 +239,7 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   public onStep2Next(event){
+    this.calculateTotalPointsOfCustomer();
     this.calculateEarnedPoints();
   }
 
