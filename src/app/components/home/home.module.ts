@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
 import {HomeRoutingModule} from "./home-routing.module";
 import {HomeComponent} from "./home.component";
+import {AgmCoreModule} from "@agm/core";
 
 @NgModule({
     imports: [
@@ -14,7 +15,10 @@ import {HomeComponent} from "./home.component";
         CommonModule,
         Ng2BootstrapModule,
         ModalModule.forRoot(),
-        FormsModule
+        FormsModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyDVtlUNBASrpPnWqUh2L6j8xVljrdN6izg'
+        })
     ],
     declarations: [ HomeComponent ]
 })
