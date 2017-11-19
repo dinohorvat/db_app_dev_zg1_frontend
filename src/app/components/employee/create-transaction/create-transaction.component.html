@@ -49,6 +49,7 @@
                            </tr>
                            </tbody>
                         </table>
+
                      </div>
                   </div>
                </div>
@@ -56,7 +57,8 @@
          </div>
 
       </wizard-step>
-      <wizard-step [title]="'Add Products'" [isValid]="productList.length>0" (onNext)="onStep1Next($event)">
+      <wizard-step [title]="'Add Products'" [isValid]="productList.length>0 &&
+         transaction.dcsDate.transactionExpCompleted != undefined" (onNext)="onStep1Next($event)">
          <div class="col-sm-12 col-md-12">
             <div class="card card-accent-warning">
                <div class="card-header">
@@ -64,42 +66,70 @@
                </div>
                <div class="card-block">
                   <div class="card-block">
-                     <div class="form-group row" *ngFor="let item of productList">
-                        <div class="col-md-3 col-sm-5">
-                           <!--TODO: fix property binding into object binding-->
-                           <select class="form-control" [(ngModel)]="item.name">
-                              <option  *ngFor="let p of allProducts" [ngValue]="p.name">{{p.name}}</option>
+                     <div class="form-group row">
+                        <div class="col-md-5 col-sm-5">
+                           <select class="form-control" [(ngModel)]="tempTransactionProduct">
+                              <option  *ngFor="let p of allProducts" [ngValue]="p">{{p.name}}</option>
                            </select>
                         </div>
-                        <div class="col-md-3 col-sm-5">
-                           <input class="form-control" disabled [(ngModel)]="item.price" placeholder="Product price">
+                        <div class="col-md-5 col-sm-5">
+                           <input class="form-control" disabled [(ngModel)]="tempTransactionProduct.price" placeholder="Product price">
                         </div>
                         <div class="col-md-2 col-sm-2">
-                           <button class="btn btn-outline-danger" (click)="removeProductItem(item)" type="button"><i class="fa fa-trash"></i></button>
+                           <button class="btn btn-outline-success" [disabled]="tempTransactionProduct.name == undefined" (click)="addProductItem()" type="button"><i class="fa fa-plus"></i></button>
                         </div>
                      </div>
-
-                     <div class="form-group row">
-                        <label class="col-md-6 col-sm-6 form-control-label">Total price: </label>
-                        <label class="col-md-6 col-sm-6 form-control-label"><h4>{{transaction.totalPrice}}</h4></label>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-primary" (click)="addProductItem()"><i class="fa fa-plus"></i> Add Product</button>
-                     </div>
                   </div>
+
+                     <div class="card-block">
+                        <h5 *ngIf="productList.length > 0" class="component-title">List of products</h5>
+                        <div *ngIf="productList.length > 0" class="form-group row">
+                           <div class="col-md-5 col-sm-5">
+                              <div class="col-md-6 col-sm-6">
+                                 <label class="form-control-label"><b>Product name</b></label>
+                              </div>
+                           </div>
+                           <div class="col-md-6 col-sm-6">
+                              <label class="form-control-label"><b>Product price</b></label>
+                           </div>
+                        </div>
+
+                        <div class="form-group row" *ngFor="let product of productList">
+                           <div class="col-md-5 col-sm-5">
+                              <div class="col-md-6 col-sm-6">
+                                 <label class="form-control-label">{{product.name}}</label>
+                              </div>
+                           </div>
+                           <div class="col-md-3 col-sm-3">
+                              <label class="form-control-label">{{product.price}}</label>
+                           </div>
+                           <div class="col-md-2 col-sm-2">
+                              <button class="btn btn-outline-danger" (click)="removeProductItem(product)" type="button"><i class="fa fa-trash"></i></button>
+                           </div>
+                        </div>
+
+                        <div class="form-group row">
+                           <label class="col-md-6 col-sm-6 form-control-label">Total price: </label>
+                           <label class="col-md-6 col-sm-6 form-control-label"><h4>{{transaction.totalPrice}}</h4></label>
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                     </div>
                </div>
             </div>
 
             <div class="card card-accent-warning">
                <div class="card-header">
-                  Add Information
+                  Additional
                </div>
                <div class="card-block">
                   <div class="form-horizontal ">
                      <div class="form-group row">
                         <div class="col-md-4">
+                           <label class="form-control-label">Expected date of completion:</label>
                            <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                               <input [(ngModel)]="transaction.dcsDate.transactionExpCompleted" id="datetime" type="datetime-local">
                            </div>
                         </div>
@@ -111,18 +141,128 @@
                </div>
             </div>
          </div>
+      </wizard-step>
 
+      <wizard-step [hidden]="!showHiddenStep" [title]="'Apply Points'" (onNext)="onStep2Next($event)">
+         <div class="card-block">
+            <div class="form-group row">
+               <div class="col-md-5 col-sm-5">
+                  <select class="form-control" [(ngModel)]="tempRewardsObject">
+                     <option  *ngFor="let policy of this.employeeCompany.policies" [ngValue]="policy">{{policy.numPoints}}</option>
+                  </select>
+               </div>
+               <div class="col-md-5 col-sm-5">
+                  <input class="form-control" disabled [(ngModel)]="tempRewardsObject.amountReduced" placeholder="Amount Reduced">
+               </div>
+               <div class="col-md-2 col-sm-2">
+                  <button class="btn btn-outline-success" [disabled]="tempRewardsObject.numPoints == undefined" (click)="applyPolicy()" type="button"><i class="fa fa-plus"></i></button>
+               </div>
+            </div>
+         </div>
+
+         <div class="form-group row">
+            <div class="card-block col-md-4">
+               <label class="col-md-6 col-sm-6 form-control-label">Original total: </label>
+               <label class="col-md-6 col-sm-6 form-control-label"><h4>{{tempOriginalPrice}} {{employeeCompany.currency.abbreviation}}</h4></label>
+            </div>
+
+            <div class="card-block col-md-4">
+               <label class="col-md-6 col-sm-6 form-control-label">New total: </label>
+               <label class="col-md-6 col-sm-6 form-control-label"><h4 id="newTotal">{{transaction.totalPrice}} {{employeeCompany.currency.abbreviation}}</h4></label>
+            </div>
+
+            <div class="card-block col-md-4">
+               <label class="col-md-6 col-sm-6 form-control-label">Remaining points: </label>
+               <label class="col-md-6 col-sm-6 form-control-label"><h4>{{customerPoints}}</h4></label>
+            </div>
+         </div>
+
+         <div class="form-group card-block row">
+            <label class="col-md-7 col-sm-7 form-control-label" *ngIf="appliedPoliciesList.length > 0">Price deductions: </label>
+         </div>
+
+         <div class="form-group row" *ngFor="let deduction of appliedPoliciesList">
+            <div class="col-md-5 col-sm-5">
+               <div class="col-md-6 col-sm-6">
+                  <label id="priceDeductions" class="form-control-label"><h6>-{{deduction.amountReduced}}{{employeeCompany.currency.abbreviation}}</h6></label>
+               </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+               <button class="btn btn-outline-danger" (click)="removeDeduction(deduction)" type="button"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="col-md-3 col-sm-3">
+               <label class="form-control-label"></label>
+            </div>
+         </div>
       </wizard-step>
-      <wizard-step [hidden]="hiddenStep"[title]="'Apply Points'" (onNext)="onStep1Next($event)">
-         <h1>Step2</h1>
-      </wizard-step>
+
       <wizard-step [title]="'Confirm'" (onComplete)="onComplete($event)">
          <div [ngSwitch]="isCompleted">
             <div *ngSwitchDefault>
-               <h1>Step4</h1>
+               <div class="card-block">
+                  <div class="col-sm-12 col-md-12">
+                     <div class="card card-accent-primary">
+                        <div class="card-header">
+                           Product Summary
+                        </div>
+                        <div class="card-block">
+                           <table class="table table-striped table-hover table-outline mb-0 hidden-sm-down">
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                 </tr>
+                              </thead>
+
+                              <tbody>
+                                 <tr *ngFor="let product of productList">
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.description}}</td>
+                                    <td>{{product.price}}</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+
+                     <div class="card card-accent-primary">
+                        <div class="card-header">
+                           Rewards Summary
+                        </div>
+                        <div class="card-block">
+                           <div class="form-group row">
+                              <div class="card-block col-md-4">
+                                 <label class="col-md-6 col-sm-6 form-control-label">Total w/o discount: </label>
+                                 <label class="col-md-6 col-sm-6 form-control-label"><h4>{{tempOriginalPrice}} {{employeeCompany.currency.abbreviation}}</h4></label>
+                              </div>
+
+                              <div class="card-block col-md-4">
+                                 <label class="col-md-6 col-sm-6 form-control-label">Total with discount: </label>
+                                 <label class="col-md-6 col-sm-6 form-control-label"><h4>{{transaction.totalPrice}} {{employeeCompany.currency.abbreviation}}</h4></label>
+                              </div>
+
+                              <div class="card-block col-md-4">
+                                 <label class="col-md-6 col-sm-6 form-control-label">Remaining points: </label>
+                                 <label class="col-md-6 col-sm-6 form-control-label"><h4>{{customerPoints}}</h4></label>
+                              </div>
+                           </div>
+
+                           <div class="form-group row">
+                              <div class="card-block col-md-4">
+                                 <label class="col-md-6 col-sm-6 form-control-label">Earned points: </label>
+                                 <label class="col-md-6 col-sm-6 form-control-label"><h4>{{tempEarnedCustomerPoints}}</h4></label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
             </div>
+
             <div *ngSwitchCase="true">
-               <h4>Thank you! You have completed all the steps.</h4>
+               <h4>Thank you on your order!</h4>
             </div>
          </div>
       </wizard-step>

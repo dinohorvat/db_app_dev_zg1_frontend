@@ -5,7 +5,7 @@ import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {CreateTransactionComponent} from "./create-transaction.component";
 import {FormWizardModule} from "angular2-wizard/dist";
-import {CalendarModule} from "primeng/primeng";
+import {CalendarModule, DropdownModule} from "primeng/primeng";
 /**
  * Created by HrvojeGrgic on 16/11/2017.
  */
@@ -18,6 +18,7 @@ import {CalendarModule} from "primeng/primeng";
         FormsModule,
         FormWizardModule,
         CalendarModule,
+        DropdownModule
     ],
     declarations: [ CreateTransactionComponent ]
 })

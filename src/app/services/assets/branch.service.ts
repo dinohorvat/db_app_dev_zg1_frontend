@@ -17,7 +17,7 @@ export class BranchService {
     constructor(private http: Http) {
     }
 
-    fetchBranch(entityId: string): Promise<BranchModel> {
+    fetchBranch(entityId: number): Promise<BranchModel> {
         let url = environment.endpoint + '/branch/' + entityId;
         return this.http.get(url)
             .toPromise()

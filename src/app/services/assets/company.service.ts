@@ -16,7 +16,7 @@ export class CompanyService {
     constructor(private http: Http) {
     }
 
-    fetchCurrency(entityId: string): Promise<CompanyModel> {
+    fetchCompany(entityId: number): Promise<CompanyModel> {
         let url = environment.endpoint + '/company/' + entityId;
         return this.http.get(url)
             .toPromise()

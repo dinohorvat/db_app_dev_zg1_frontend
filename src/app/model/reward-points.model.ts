@@ -3,6 +3,7 @@
  */
 export class RewardPointsModel{
     id: number;
-    amount: number;
+    amount: number = 0;
     occurred: string;
+    transactionId: number;
 }
