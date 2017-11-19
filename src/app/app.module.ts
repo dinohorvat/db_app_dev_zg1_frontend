@@ -33,10 +33,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {KeyCloakService} from "./services/keycloak/keycloak.service";
 import { LoginScreenComponent } from './components/login/login-screen/login-screen.component';
 import { LogoutScreenComponent } from './components/login/logout-screen/logout-screen.component';
-import { EmployeeProfileComponent } from './components/employee/employee-profile/employee-profile.component';
 import {ToasterModule, ToasterService} from "angular2-toaster";
-import { HomeComponent } from './components/home/home.component';
-import { CreateTransactionComponent } from './components/employee/create-transaction/create-transaction.component';
 
 @NgModule({
   imports: [

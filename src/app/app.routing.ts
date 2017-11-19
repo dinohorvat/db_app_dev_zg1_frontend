@@ -63,6 +63,27 @@ export const routes: Routes = [
         path: 'create-transaction',
         loadChildren: './components/employee/create-transaction/create-transaction.module#CreateTransactionModule'
       },
+      {
+        path: 'manager-company',
+        loadChildren: './components/manager/manager-company/manager-company.module#ManagerCompanyModule'
+      },
+      {
+        path: 'manager-branch',
+        loadChildren: './components/manager/manager-branch/manager-branch.module#ManagerBranchModule'
+      },
+      {
+        path: 'manager-transactions',
+        loadChildren: './components/manager/manager-transactions/manager-transactions.module#ManagerTransactionsModule'
+      },
+      {
+        path: 'manager-employee',
+        loadChildren: './components/manager/manager-employee/manager-employee.module#ManagerEmployeeModule'
+      },
+      {
+        path: 'manager-customer',
+        loadChildren: './components/manager/manager-customer/manager-customer.module#ManagerCustomerModule'
+      },
+
 
     ]
   }

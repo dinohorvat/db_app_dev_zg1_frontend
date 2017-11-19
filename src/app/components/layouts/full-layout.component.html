@@ -36,6 +36,10 @@
                 <a class="dropdown-item" [routerLink]="['/logout']"><i class="fa fa-lock"></i> Logout</a>
             </div>
         </li>
+        <li class="nav-item hidden-md-down">
+            <a class="nav-link navbar-toggler aside-menu-toggler" href="#">&#9776;</a>
+        </li>
+
     </ul>
 
 </header>
@@ -72,6 +76,24 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/create-transaction']"><i class="fa fa-cart-plus"></i> Create Transaction</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="sidebar" [hasPermission]="['owner']">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-company']"><i class="icon-speedometer"></i> Company Information </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  routerLinkActive="active" [routerLink]="['/manager-employee']"><i class="fa fa-user"></i> Employees </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-customer']"><i class="fa fa-dollar"></i> Customers </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-transactions']"><i class="fa fa-cart-plus"></i> Transactions </a>
                 </li>
             </ul>
         </nav>
