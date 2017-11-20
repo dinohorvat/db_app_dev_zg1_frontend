@@ -143,6 +143,7 @@ export class CreateTransactionComponent implements OnInit {
       this.employeeBranch = response;
       Promise.resolve(this.companyService.fetchCompany(response.company.id)).then(response =>{
         this.employeeCompany = response;
+        console.log(this.employeeCompany);
       });
     });
   }

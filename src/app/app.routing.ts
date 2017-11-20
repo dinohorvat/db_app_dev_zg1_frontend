@@ -68,7 +68,7 @@ export const routes: Routes = [
         loadChildren: './components/manager/manager-company/manager-company.module#ManagerCompanyModule'
       },
       {
-        path: 'manager-branch',
+        path: 'manager-branch/:id',
         loadChildren: './components/manager/manager-branch/manager-branch.module#ManagerBranchModule'
       },
       {

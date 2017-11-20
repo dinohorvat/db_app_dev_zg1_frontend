@@ -17,7 +17,7 @@ export class ManagerCompanyComponent implements OnInit {
     this.getCompanyObject();
   }
   getCompanyObject(){
-    Promise.resolve(this.companyService.fetchCompany('1')).then(resource =>{
+    Promise.resolve(this.companyService.fetchCompany(1)).then(resource =>{
       if(!isNullOrUndefined(resource)){
         this.company = resource;
         console.log(this.company);

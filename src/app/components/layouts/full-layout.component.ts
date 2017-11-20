@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {PermissionService} from "angular2-permission";
 import {KeyCloakService} from "../../services/keycloak/keycloak.service";
+import {CompanyService} from "../../services/assets/company.service";
+import {isNullOrUndefined} from "util";
+import {CompanyModel} from "../../model/company.model";
+import {BranchModel} from "../../model/branch.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,10 +12,11 @@ import {KeyCloakService} from "../../services/keycloak/keycloak.service";
 })
 export class FullLayoutComponent implements OnInit {
   user: any;
+  company: CompanyModel;
+  branches: BranchModel[];
+  constructor(private permissionService: PermissionService, keyCloakService: KeyCloakService, private companyService: CompanyService) {
 
-  constructor(private permissionService: PermissionService, keyCloakService: KeyCloakService) {
     this.user = keyCloakService.getUser();
-    console.log(this.user);
     for(var i=0; i<this.user.roles.length; i++){
       console.log(this.user.roles[i]);
       this.permissionService.add(this.user.roles[i]);
@@ -30,6 +35,17 @@ export class FullLayoutComponent implements OnInit {
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
+  public getBranches(){
+    Promise.resolve(this.companyService.fetchCompany(1))
+        .then(response => {
+          if(!isNullOrUndefined(response)){
+            this.company = response;
+            this.branches = this.company.branches;
+          }
+  });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getBranches();
+  }
 }

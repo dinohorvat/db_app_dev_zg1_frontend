@@ -1,3 +1,31 @@
-<p>
-  manager-branch works!
-</p>
+<div class="row">
+<div class="col-sm-6 col-md-2">
+  <div class="card card-inverse card-info">
+    <div class="card-block">
+      <div class="h1 text-muted text-right mb-2">
+        <i class="icon-people"></i>
+      </div>
+      <div class="h4 mb-0">{{employeesNumber}}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Employees</small>
+    </div>
+    <div class="card-footer px-1 py-h">
+      <a class="font-weight-bold font-xs btn-block text-muted" routerLinkActive="active" [routerLink]="['employees']">View Details <i class="fa fa-angle-right float-right font-lg"></i></a>
+    </div>
+  </div>
+</div><!--/.col-->
+<div class="col-sm-6 col-md-2">
+  <div class="card card-inverse card-warning">
+    <div class="card-block">
+      <div class="h1 text-muted text-right mb-2">
+        <i class="icon-basket-loaded"></i>
+      </div>
+      <div class="h4 mb-0">{{transactionsNumber}}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Transactions</small>
+    </div>
+    <div class="card-footer px-1 py-h">
+      <a class="font-weight-bold font-xs btn-block text-muted" href="#">View Details <i class="fa fa-angle-right float-right font-lg"></i></a>
+    </div>
+  </div>
+</div><!--/.col-->
+</div>
+<router-outlet></router-outlet>

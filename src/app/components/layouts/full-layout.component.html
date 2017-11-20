@@ -95,6 +95,13 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-transactions']"><i class="fa fa-cart-plus"></i> Transactions </a>
                 </li>
+                <li class="divider"></li>
+                <li class="nav-title text-center">
+                    <span>Branches</span>
+                </li>
+                <li *ngFor="let branch of branches"  class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/manager-branch',branch.id]"><i class="fa fa-building-o"></i> {{branch.name}} </a>
+                </li>
             </ul>
         </nav>
     </div>

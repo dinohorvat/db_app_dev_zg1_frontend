@@ -25,7 +25,6 @@ export class LoginScreenComponent implements OnInit {
           if(!isNullOrUndefined(response)){
             this.user = this.keyCloakService.getUser();
              if( this.user.roles.indexOf("owner") > -1){
-                 alert('Manager')
                  this.router.navigate(["/manager-company"]);
              }
             else if( this.user.roles.indexOf("employee") > -1){

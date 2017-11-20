@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
 import {ManagerBranchRoutingModule} from "./manager-branch-routing.module";
 import {ManagerBranchComponent} from "./manager-branch.component";
+import {ManagerEmployeeComponent} from "./manager-employee/manager-employee.component";
 
 @NgModule({
     imports: [
@@ -16,6 +17,9 @@ import {ManagerBranchComponent} from "./manager-branch.component";
         ModalModule.forRoot(),
         FormsModule
     ],
-    declarations: [ ManagerBranchComponent ]
+    declarations: [
+        ManagerBranchComponent,
+        ManagerEmployeeComponent
+    ]
 })
 export class ManagerBranchModule {}
