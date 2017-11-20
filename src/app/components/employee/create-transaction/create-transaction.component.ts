@@ -86,6 +86,7 @@ export class CreateTransactionComponent implements OnInit {
     });
   }
 
+
   resetSearch(){
     this.showSearchResults = false;
     this.searchCustomer = new CustomerModel;
@@ -95,15 +96,34 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   public searchCustomers(){
-    Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
-      if(!isNullOrUndefined(resource)){
-        this.customerSearchResults = new Array<CustomerModel>();
-        this.customerSearchResults.push(resource);
-        this.showSearchResults = true;
-      }else {
-        this.globalService.showWarning("Not Found", "No results found.");
-      }
-    });
+
+    if(!isNullOrUndefined(this.searchCustomer.id)){
+      Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
+        if(!isNullOrUndefined(resource)){
+          this.customerSearchResults = new Array<CustomerModel>();
+          this.customerSearchResults.push(resource);
+          this.showSearchResults = true;
+        }else {
+          Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+            if(!isNullOrUndefined(resource)){
+              this.customerSearchResults = resource;
+              this.showSearchResults = true;
+            }else {
+              this.globalService.showWarning("Not Found", "No results found.");
+            }
+          });
+        }
+      });
+    }else {
+      Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+        if(!isNullOrUndefined(resource)){
+          this.customerSearchResults = resource;
+          this.showSearchResults = true;
+        }else {
+          this.globalService.showWarning("Not Found", "No results found.");
+        }
+      });
+    }
   }
 
   public setSelectedCustomer(customer: CustomerModel){
@@ -216,8 +236,12 @@ export class CreateTransactionComponent implements OnInit {
           var earnedPoints: RewardPointsModel = new RewardPointsModel;
           earnedPoints.amount = this.tempEarnedCustomerPoints;
 
-          this.selectedCustomer.rewardPoints.push(negativeReward);
-          this.selectedCustomer.rewardPoints.push(earnedPoints);
+          if(negativeReward.amount != 0){
+            this.selectedCustomer.rewardPoints.push(negativeReward);
+          }
+          if(earnedPoints.amount != 0){
+            this.selectedCustomer.rewardPoints.push(earnedPoints);
+          }
 
           Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response => {
             if(!isNullOrUndefined(response)){

@@ -107,16 +107,34 @@ export class EmployeeTransactionsComponent implements OnInit {
 
 
   public searchCustomers(){
-    Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
-      if(!isNullOrUndefined(resource)){
-        this.customerSearchResults = new Array<CustomerModel>();
-        this.customerSearchResults.push(resource);
-        this.globalService.showSuccess("Success", "Results found.");
-        this.showSearchResults = true;
-      }else {
-        this.globalService.showWarning("Not Found", "No results found.");
-      }
-    });
+
+    if(!isNullOrUndefined(this.searchCustomer.id)){
+      Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
+        if(!isNullOrUndefined(resource)){
+          this.customerSearchResults = new Array<CustomerModel>();
+          this.customerSearchResults.push(resource);
+          this.showSearchResults = true;
+        }else {
+          Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+            if(!isNullOrUndefined(resource)){
+              this.customerSearchResults = resource;
+              this.showSearchResults = true;
+            }else {
+              this.globalService.showWarning("Not Found", "No results found.");
+            }
+          });
+        }
+      });
+    }else {
+      Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+        if(!isNullOrUndefined(resource)){
+          this.customerSearchResults = resource;
+          this.showSearchResults = true;
+        }else {
+          this.globalService.showWarning("Not Found", "No results found.");
+        }
+      });
+    }
   }
 
 
