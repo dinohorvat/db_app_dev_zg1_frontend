@@ -10,6 +10,7 @@ import {PermissionService} from "angular2-permission";
 import {Router} from "@angular/router";
 import {resource} from "selenium-webdriver/http";
 import {isNullOrUndefined} from "util";
+import {EmailModel} from "../../../model/email-model";
 
 
 @Component({
@@ -154,6 +155,11 @@ export class EmployeeTransactionsComponent implements OnInit {
     Promise.resolve(this.transactionsService.saveTransactions(true, this.selectedTransaction)).then(response =>{
       if(!isNullOrUndefined(response)){
         this.globalService.showSuccess("Success", "Transaction Updated.");
+        var emailModel:EmailModel = new EmailModel(this.selectedCustomer.email, "Automated Message",
+            `Your transaction has been updated.
+             \nCurrent status: ${this.selectedTransaction.status}
+             \nCurrent completion date: ${this.selectedTransaction.dcsDate.transactionExpCompleted}`);
+        this.customerService.notifyCustomer(emailModel);
       }
     });
   }

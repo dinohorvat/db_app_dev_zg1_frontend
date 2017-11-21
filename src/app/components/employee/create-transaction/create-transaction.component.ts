@@ -16,6 +16,7 @@ import {RewardPolicy} from "../../../model/reward-policy";
 import {TransactionItem} from "../../../model/transaction-item";
 import {RewardPointsModel} from "../../../model/reward-points.model";
 import {TransactionsService} from "../../../services/assets/transactions.service";
+import {EmailModel} from "../../../model/email-model";
 
 @Component({
   selector: 'app-create-transaction',
@@ -243,9 +244,18 @@ export class CreateTransactionComponent implements OnInit {
             this.selectedCustomer.rewardPoints.push(earnedPoints);
           }
 
+
           Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response => {
             if(!isNullOrUndefined(response)){
-              this.globalService.showSuccess("Success", "Transaction saved successfully.")
+              this.globalService.showSuccess("Success", "Transaction saved successfully.");
+
+              var emailModel:EmailModel = new EmailModel(this.selectedCustomer.email, "Automated Message",
+                  `Thank you on your order. Your transaction has been successfully recorded. 
+                  \nTotal amount: ${this.transaction.totalPrice}${this.employeeCompany.currency.abbreviation}
+                  \nExpected time of ccompletion ${this.transaction.dcsDate.transactionExpCompleted}
+                  \nPoints earned: ${this.tempEarnedCustomerPoints}
+                  \nTotal amount of points: ${this.customerPoints}`);
+              this.customerService.notifyCustomer(emailModel);
             }
           });
       }
