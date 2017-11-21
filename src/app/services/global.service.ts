@@ -18,6 +18,7 @@ export class GlobalService{
 
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
+    statusOptions=['SUBMITTED', 'COMPLETED', 'IN_PROGRESS', 'CANCELED'];
 
     constructor (private companyService: CompanyService,
                  private http: Http,

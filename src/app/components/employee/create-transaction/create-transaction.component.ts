@@ -116,14 +116,20 @@ export class CreateTransactionComponent implements OnInit {
         }
       });
     }else {
-      Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
-        if(!isNullOrUndefined(resource)){
-          this.customerSearchResults = resource;
-          this.showSearchResults = true;
-        }else {
-          this.globalService.showWarning("Not Found", "No results found.");
-        }
-      });
+      if(!isNullOrUndefined(this.searchCustomer.email) || !isNullOrUndefined(this.searchCustomer.firstname)
+           || !isNullOrUndefined(this.searchCustomer.lastname)){
+
+        Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+          if(!isNullOrUndefined(resource)){
+            this.customerSearchResults = resource;
+            this.showSearchResults = true;
+          }else {
+            this.globalService.showWarning("Not Found", "No results found.");
+          }
+        });
+      }else {
+        this.globalService.showError("No search condition","Please enter search condition");
+      }
     }
   }
 
@@ -225,6 +231,7 @@ export class CreateTransactionComponent implements OnInit {
     Promise.resolve(this.transactionService.saveTransactions(false, this.transaction)).then(response =>{
 
       if(!isNullOrUndefined(response)){
+          this.transaction = response;
           let totalNegativePoints = 0;
           for(let policy of this.appliedPoliciesList){
             totalNegativePoints += policy.numPoints
@@ -245,12 +252,13 @@ export class CreateTransactionComponent implements OnInit {
           }
 
 
-          Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response => {
+          Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response2 => {
             if(!isNullOrUndefined(response)){
               this.globalService.showSuccess("Success", "Transaction saved successfully.");
 
               var emailModel:EmailModel = new EmailModel(this.selectedCustomer.email, "Automated Message",
                   `Thank you on your order. Your transaction has been successfully recorded. 
+                  \nTransaction Number: ${this.transaction.id}
                   \nTotal amount: ${this.transaction.totalPrice}${this.employeeCompany.currency.abbreviation}
                   \nExpected time of ccompletion ${this.transaction.dcsDate.transactionExpCompleted}
                   \nPoints earned: ${this.tempEarnedCustomerPoints}

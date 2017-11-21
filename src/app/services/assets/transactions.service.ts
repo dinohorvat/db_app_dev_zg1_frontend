@@ -13,6 +13,7 @@ export class TransactionsService {
     headers = new Headers({'Content-Type': 'application/json'});
     options = new RequestOptions({headers: this.headers});
     inflection = require('inflection');
+    transactionStatus = ['badge badge-success', 'badge badge-danger', 'badge badge-warning', 'badge badge-primary'];
 
     constructor(private http: Http, private globalService: GlobalService) {
     }
@@ -28,10 +29,27 @@ export class TransactionsService {
     }
 
     saveTransactions(ifEdit: boolean, entity): Promise<TransactionsModel>{
-        return this.globalService.saveEntity(ifEdit, 'transactions', entity);
+        return this.globalService.saveEntity(ifEdit, 'transactions', entity).then(response =>{
+            return response.json().body as TransactionsModel;
+        });
     }
 
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
+    }
+
+    public checkStatus(status: string): string{
+        if(status == 'SUBMITTED'){
+            return this.transactionStatus[2];
+        }
+        else if(status =='IN_PROGRESS'){
+            return this.transactionStatus[3];
+        }
+        else if(status =='CANCELED'){
+            return this.transactionStatus[1];
+        }
+        else if(status =='COMPLETED'){
+            return this.transactionStatus[0];
+        }
     }
 }

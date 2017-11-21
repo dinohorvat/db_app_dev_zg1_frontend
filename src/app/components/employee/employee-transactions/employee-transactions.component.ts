@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EmployeeService} from "../../../services/assets/employee.service";
 import {EmployeeModel} from "../../../model/employee.model";
 import {TransactionsModel} from "../../../model/transactions.model";
@@ -30,10 +30,13 @@ export class EmployeeTransactionsComponent implements OnInit {
   private customerSearchResults: CustomerModel[];
   private createCustomer: CustomerModel;
   private showSearchResults: boolean = false;
-  private selectedCustomer: CustomerModel ;
+  private selectedCustomer: CustomerModel;
+  private transactionStatusOptions;
 
-  constructor(private router: Router, private _permissionService: PermissionService, private employeeService: EmployeeService, private transactionsService: TransactionsService,
-              private customerService: CustomerService, private globalService: GlobalService, private transactionService: TransactionsService) {
+  constructor(private router: Router, private _permissionService: PermissionService,
+              private employeeService: EmployeeService,
+              private transactionsService: TransactionsService, private customerService: CustomerService,
+              private globalService: GlobalService, private transactionService: TransactionsService) {
     if(this.checkPermission()) {
 
     }
@@ -45,7 +48,9 @@ export class EmployeeTransactionsComponent implements OnInit {
 
   ngOnInit() {
     if(this.checkPermission()) {
+      this.transactionStatusOptions = this.globalService.statusOptions;
       this.searchCustomer = new CustomerModel;
+      this.previousTransaction = new Array<TransactionsModel>();
       this.selectedTransaction = new TransactionsModel;
       this.recoverSelectedTransaction = new TransactionsModel;
       this.transactionCustomer = new CustomerModel;
@@ -154,13 +159,32 @@ export class EmployeeTransactionsComponent implements OnInit {
   public saveTransactions(){
     Promise.resolve(this.transactionsService.saveTransactions(true, this.selectedTransaction)).then(response =>{
       if(!isNullOrUndefined(response)){
+
+        this.refreshStatusInComponentsObjects(response);
+
+
         this.globalService.showSuccess("Success", "Transaction Updated.");
-        var emailModel:EmailModel = new EmailModel(this.selectedCustomer.email, "Automated Message",
+        var emailModel:EmailModel = new EmailModel(this.transactionCustomer.email, "Automated Message",
             `Your transaction has been updated.
+             \nTransaction Number: ${this.selectedTransaction.id}
              \nCurrent status: ${this.selectedTransaction.status}
              \nCurrent completion date: ${this.selectedTransaction.dcsDate.transactionExpCompleted}`);
         this.customerService.notifyCustomer(emailModel);
       }
     });
+  }
+
+  public checkStatus(status: string): string {
+    return this.transactionsService.checkStatus(status)
+  }
+
+  public refreshStatusInComponentsObjects(response){
+    for(let trans of this.previousTransaction){
+      if(trans.id == response.id){
+        trans = response;
+        alert('tu')
+      }
+    }
+    this.selectedTransaction = response;
   }
 }

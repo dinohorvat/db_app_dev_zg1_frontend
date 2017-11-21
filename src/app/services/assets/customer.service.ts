@@ -30,8 +30,9 @@ export class CustomerService {
             });
     }
 
+
     searchCustomers(entity: CustomerModel): Promise<CustomerModel[]> {
-        let url = environment.endpoint + '/customer/search';
+        let url = environment.endpoint + 'customer/search';
         let request = JSON.stringify(entity);
         return this.http.post(url, request, this.options)
             .toPromise()

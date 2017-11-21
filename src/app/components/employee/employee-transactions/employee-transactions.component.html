@@ -24,7 +24,7 @@
                         <td class="text-center">{{transaction.id}}</td>
                         <td class="text-center">{{transaction.totalPrice}}</td>
                         <td class="text-center">
-                           <span class="badge badge-success">{{transaction.status}}</span>
+                           <span class="{{checkStatus(transaction.status)}}">{{transaction.status}}</span>
                         </td>
                      </tr>
                      </tbody>
@@ -137,7 +137,11 @@
                         </div>
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Transaction Status: </label>
-                           <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="selectedTransaction.status"></div>
+                           <div class="col-md-9 col-sm-6">
+                              <select class="form-control" [(ngModel)]="selectedTransaction.status">
+                                 <option  *ngFor="let sts of transactionStatusOptions" [ngValue]="sts">{{sts}}</option>
+                              </select>
+                           </div>
                         </div>
                         <div class="form-group row">
                            <label class="col-md-3 col-sm-6 form-control-label">Total Price:</label>
@@ -153,7 +157,6 @@
                            <label class="col-md-3 col-sm-6 form-control-label">Transaction Expected Completed:</label>
                            <div class="col-md-9 col-sm-6">
                               <input class="form-control" type="datetime-local" [(ngModel)]="selectedTransaction.dcsDate.transactionExpCompleted">
-
                            </div>
                         </div>
                      </div>
@@ -242,7 +245,7 @@
                         <td class="text-center">{{transaction.branchName}}</td>
                         <td class="text-center">{{transaction.transactionExpCompleted}}</td>
                         <td class="text-center">
-                           <span class="badge badge-success">{{transaction.status}}</span>
+                           <span class="{{checkStatus(transaction.status)}}">{{transaction.status}}</span>
                         </td>
                         <td class="text-center">{{transaction.totalPrice}}</td>
                      </tr>
@@ -254,7 +257,7 @@
          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="transactionModal.hide()">Close</button>
             <button type="button" (click)="saveTransactions()" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-success" (click)="switchToCustomer(transactionCustomer.id); transactionModal.hide(); searchedCustomerModal.show()">Switch To Customer Profile</button>
+            <button type="button" class="btn btn-success" (click)="switchToCustomer(transactionCustomer.id); searchedCustomerModal.show() ; transactionModal.hide()">Switch To Customer Profile</button>
          </div>
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
