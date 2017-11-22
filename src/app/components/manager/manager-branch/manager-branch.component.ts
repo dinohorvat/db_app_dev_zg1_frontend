@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {BranchService} from "../../../services/assets/branch.service";
 import {isNullOrUndefined} from "util";
 import {BranchModel} from "../../../model/branch.model";
+import {EmployeeModel} from "../../../model/employee.model";
+import {EmployeeService} from "../../../services/assets/employee.service";
 
 @Component({
   selector: 'app-manager-branch',
@@ -12,12 +14,13 @@ import {BranchModel} from "../../../model/branch.model";
 export class ManagerBranchComponent implements OnInit {
 
   branch: BranchModel;
+  employees: EmployeeModel[];
   id: number;
 
   employeesNumber: number;
   transactionsNumber: number;
 
-  constructor(private branchService: BranchService, private activatedRoute: ActivatedRoute) { }
+  constructor(private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -31,9 +34,12 @@ export class ManagerBranchComponent implements OnInit {
         .then(response => {
           if(!isNullOrUndefined(response)){
             this.branch = response;
+            this.employees = this.branch.employees;
             this.employeesNumber = this.branch.employees.length;
             this.transactionsNumber = this.branch.transactions.length;
-            console.log(this.branch)
+
+            this.employeeService.employees = this.employees
+            console.log(this.branch);
           }
         });
 

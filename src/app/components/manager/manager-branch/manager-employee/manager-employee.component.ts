@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {EmployeeService} from "../../../../services/assets/employee.service";
+import {EmployeeModel} from "../../../../model/employee.model";
 
 @Component({
   selector: 'app-manager-employee',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagerEmployeeComponent implements OnInit {
 
-  constructor() { }
+  employees: EmployeeModel[];
+  employee: EmployeeModel;
+  constructor(private employeeService:EmployeeService ){
+  }
 
   ngOnInit() {
+    this.employees = this.employeeService.employees;
+  }
+
+  showEmployee(id: number){
+    Promise.resolve(this.employeeService.fetchEmployee(id)).then(response => {
+      this.employee = response;
+    });
   }
 
 }

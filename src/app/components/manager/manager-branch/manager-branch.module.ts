@@ -8,6 +8,9 @@ import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
 import {ManagerBranchRoutingModule} from "./manager-branch-routing.module";
 import {ManagerBranchComponent} from "./manager-branch.component";
 import {ManagerEmployeeComponent} from "./manager-employee/manager-employee.component";
+import {EmployeeProfileComponent} from "../../employee/employee-profile/employee-profile.component";
+import {ManagerTransactionsComponent} from "./manager-transactions/manager-transactions.component";
+import {EmployeeTransactionsComponent} from "../../employee/employee-transactions/employee-transactions.component";
 
 @NgModule({
     imports: [
@@ -19,7 +22,10 @@ import {ManagerEmployeeComponent} from "./manager-employee/manager-employee.comp
     ],
     declarations: [
         ManagerBranchComponent,
-        ManagerEmployeeComponent
+        ManagerEmployeeComponent,
+        EmployeeProfileComponent,
+        ManagerTransactionsComponent,
+        EmployeeTransactionsComponent
     ]
 })
 export class ManagerBranchModule {}

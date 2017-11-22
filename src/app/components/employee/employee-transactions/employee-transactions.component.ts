@@ -58,7 +58,7 @@ export class EmployeeTransactionsComponent implements OnInit {
   }
 
   checkPermission(){
-    return this._permissionService.hasDefined('employee'); // true or false
+    return this._permissionService.hasOneDefined(['employee','owner']); // true or false
   }
   private loadEmployeeInfo(){
     Promise.resolve(this.employeeService.fetchEmployee(1)).then(response => {

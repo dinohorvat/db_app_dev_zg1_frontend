@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {ManagerBranchComponent} from "./manager-branch.component";
 import {ManagerEmployeeComponent} from "./manager-employee/manager-employee.component";
+import {ManagerTransactionsComponent} from "./manager-transactions/manager-transactions.component";
 
 const routes: Routes = [
     {
@@ -19,6 +20,13 @@ const routes: Routes = [
                 component: ManagerEmployeeComponent,
                 data: {
                     title: 'Employees'
+                }
+            },
+            {
+                path: 'transactions',
+                component: ManagerTransactionsComponent,
+                data: {
+                    title: 'Transactions'
                 }
             }]
     }
