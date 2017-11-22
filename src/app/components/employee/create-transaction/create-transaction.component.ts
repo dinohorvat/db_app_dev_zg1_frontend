@@ -16,6 +16,7 @@ import {RewardPolicy} from "../../../model/reward-policy";
 import {TransactionItem} from "../../../model/transaction-item";
 import {RewardPointsModel} from "../../../model/reward-points.model";
 import {TransactionsService} from "../../../services/assets/transactions.service";
+import {EmailModel} from "../../../model/email-model";
 
 @Component({
   selector: 'app-create-transaction',
@@ -86,6 +87,7 @@ export class CreateTransactionComponent implements OnInit {
     });
   }
 
+
   resetSearch(){
     this.showSearchResults = false;
     this.searchCustomer = new CustomerModel;
@@ -95,15 +97,40 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   public searchCustomers(){
-    Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
-      if(!isNullOrUndefined(resource)){
-        this.customerSearchResults = new Array<CustomerModel>();
-        this.customerSearchResults.push(resource);
-        this.showSearchResults = true;
+
+    if(!isNullOrUndefined(this.searchCustomer.id)){
+      Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
+        if(!isNullOrUndefined(resource)){
+          this.customerSearchResults = new Array<CustomerModel>();
+          this.customerSearchResults.push(resource);
+          this.showSearchResults = true;
+        }else {
+          Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+            if(!isNullOrUndefined(resource)){
+              this.customerSearchResults = resource;
+              this.showSearchResults = true;
+            }else {
+              this.globalService.showWarning("Not Found", "No results found.");
+            }
+          });
+        }
+      });
+    }else {
+      if(!isNullOrUndefined(this.searchCustomer.email) || !isNullOrUndefined(this.searchCustomer.firstname)
+           || !isNullOrUndefined(this.searchCustomer.lastname)){
+
+        Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+          if(!isNullOrUndefined(resource)){
+            this.customerSearchResults = resource;
+            this.showSearchResults = true;
+          }else {
+            this.globalService.showWarning("Not Found", "No results found.");
+          }
+        });
       }else {
-        this.globalService.showWarning("Not Found", "No results found.");
+        this.globalService.showError("No search condition","Please enter search condition");
       }
-    });
+    }
   }
 
   public setSelectedCustomer(customer: CustomerModel){
@@ -204,6 +231,7 @@ export class CreateTransactionComponent implements OnInit {
     Promise.resolve(this.transactionService.saveTransactions(false, this.transaction)).then(response =>{
 
       if(!isNullOrUndefined(response)){
+          this.transaction = response;
           let totalNegativePoints = 0;
           for(let policy of this.appliedPoliciesList){
             totalNegativePoints += policy.numPoints
@@ -216,12 +244,26 @@ export class CreateTransactionComponent implements OnInit {
           var earnedPoints: RewardPointsModel = new RewardPointsModel;
           earnedPoints.amount = this.tempEarnedCustomerPoints;
 
-          this.selectedCustomer.rewardPoints.push(negativeReward);
-          this.selectedCustomer.rewardPoints.push(earnedPoints);
+          if(negativeReward.amount != 0){
+            this.selectedCustomer.rewardPoints.push(negativeReward);
+          }
+          if(earnedPoints.amount != 0){
+            this.selectedCustomer.rewardPoints.push(earnedPoints);
+          }
 
-          Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response => {
+
+          Promise.resolve(this.globalService.saveEntity(true, 'customer', this.selectedCustomer)).then(response2 => {
             if(!isNullOrUndefined(response)){
-              this.globalService.showSuccess("Success", "Transaction saved successfully.")
+              this.globalService.showSuccess("Success", "Transaction saved successfully.");
+
+              var emailModel:EmailModel = new EmailModel(this.selectedCustomer.email, "Automated Message",
+                  `Thank you on your order. Your transaction has been successfully recorded. 
+                  \nTransaction Number: ${this.transaction.id}
+                  \nTotal amount: ${this.transaction.totalPrice}${this.employeeCompany.currency.abbreviation}
+                  \nExpected time of ccompletion ${this.transaction.dcsDate.transactionExpCompleted}
+                  \nPoints earned: ${this.tempEarnedCustomerPoints}
+                  \nTotal amount of points: ${this.customerPoints}`);
+              this.customerService.notifyCustomer(emailModel);
             }
           });
       }
