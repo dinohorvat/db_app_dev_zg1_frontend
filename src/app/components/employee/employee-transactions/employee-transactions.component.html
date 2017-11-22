@@ -382,7 +382,7 @@
                            <td class="text-center"><i class="fa fa-search"></i></td>
                            <td class="text-center">{{item.transaction.id}}</td>
                            <td class="text-center">
-                              <span class="badge badge-success">{{item.transaction.status}}</span>
+                              <span class="{{checkStatus(transaction.status)}}">{{item.transaction.status}}</span>
                            </td>
                            <td class="text-center">{{item.transaction.totalPrice}}</td>
                         </tr>
