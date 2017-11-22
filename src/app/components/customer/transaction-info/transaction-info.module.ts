@@ -1,22 +1,23 @@
 /**
  * Created by dinohorvat on 24/10/2017.
  */
+
 import { NgModule } from '@angular/core';
-import {RewardsRoutingModule} from "./rewards-routing.module";
-import {RewardsComponent} from "./rewards.component";
-import {FormsModule} from "@angular/forms";
+import {TransactionInfoRoutingModule} from "./transaction-info-routing.module";
+import {TransactionInfoComponent} from "./transaction-info.component";
 import {CommonModule} from "@angular/common";
 import {ModalModule, Ng2BootstrapModule} from "ng2-bootstrap";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
     imports: [
-        RewardsRoutingModule,
+        TransactionInfoRoutingModule,
         CommonModule,
         Ng2BootstrapModule,
         ModalModule.forRoot(),
         FormsModule
     ],
-    declarations: [ RewardsComponent ]
+    declarations: [ TransactionInfoComponent ]
 })
-export class RewardsModule { }
+export class TransactionInfoModule { }

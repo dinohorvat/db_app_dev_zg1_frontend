@@ -29,8 +29,8 @@ export const routes: Routes = [
 
     children: [
       {
-        path: 'service-info',
-        loadChildren: './components/customer/service-info/service-info.module#ServiceInfoModule',
+        path: 'transaction-info',
+        loadChildren: './components/customer/transaction-info/transaction-info.module#TransactionInfoModule',
         canActivate: [PermissionGuard],
         data: {
           Permission: {
@@ -50,6 +50,10 @@ export const routes: Routes = [
       {
         path: 'rewards',
         loadChildren: './components/customer/rewards/rewards.module#RewardsModule'
+      },
+      {
+        path: 'customer-transactions',
+        loadChildren: './components/customer/transaction-info/transaction-info.module#TransactionInfoModule'
       },
       {
         path: 'employee-transactions',

@@ -5,15 +5,15 @@
 import { NgModule } from '@angular/core';
 import { Routes,
     RouterModule } from '@angular/router';
-import {ServiceInfoComponent} from "./service-info.component";
+import {TransactionInfoComponent} from "./transaction-info.component";
 
 
 const routes: Routes = [
     {
         path: '',
-        component: ServiceInfoComponent,
+        component: TransactionInfoComponent,
         data: {
-            title: 'ServiceInfo'
+            title: 'Transactions'
         }
     }
 ];
@@ -22,4 +22,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ServiceInfoRoutingModule {}
+export class TransactionInfoRoutingModule {}

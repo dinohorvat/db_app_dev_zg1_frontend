@@ -2,28 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import {CustomerModel} from "../../../model/customer.model";
 import {CustomerService} from "../../../services/assets/customer.service";
 import {GlobalService} from "../../../services/global.service";
+import {isNullOrUndefined} from "util";
 import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 import {TransactionsService} from "../../../services/assets/transactions.service";
-import {isNullOrUndefined} from "util";
+import {TransactionsModel} from "../../../model/transactions.model";
 
 @Component({
-  selector: 'app-rewards',
-  templateUrl: './rewards.component.html',
-  styleUrls: ['./rewards.component.scss']
+  selector: 'app-service-info',
+  templateUrl: './transaction-info.component.html',
+  styleUrls: ['./transaction-info.component.scss']
 })
-export class RewardsComponent implements OnInit {
+export class TransactionInfoComponent implements OnInit {
 
   private customer: CustomerModel;
-  private totalAmountPoints = 0;
+  private selectedTransaction: TransactionsModel;
+
 
   constructor(private customerService: CustomerService, private globalService: GlobalService,
               private keyCloakService: KeyCloakService, private transactionService: TransactionsService) { }
 
-
   ngOnInit() {
     this.customer = new CustomerModel;
-    this.setCustomer();
-    this.showRewards();
+    this.selectedTransaction = new TransactionsModel;
+    this.setCustomer()
   }
 
   private setCustomer(){
@@ -38,10 +39,15 @@ export class RewardsComponent implements OnInit {
     }).catch(err => alert(err.message || err));
   }
 
-  private showRewards(){
-    for(let reward of this.customer.rewardPoints){
-      this.totalAmountPoints += reward.amount;
-    }
+  public checkStatus(status: string): string {
+    return this.transactionService.checkStatus(status)
   }
 
+  public showSelectedDetails(id:number){
+    Promise.resolve(this.transactionService.fetchTransactions(id)).then(response =>{
+      if(!isNullOrUndefined(response)){
+        this.selectedTransaction = response;
+      }
+    })
+  }
 }

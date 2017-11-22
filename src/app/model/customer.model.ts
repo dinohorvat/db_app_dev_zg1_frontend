@@ -13,7 +13,7 @@ export class CustomerModel{
     address: string;
     city: string;
     email: string;
-    transactions: TransactionItem[];
-    rewardPoints: RewardPointsModel[];
+    transactions: TransactionItem[] = new Array<TransactionItem>();
+    rewardPoints: RewardPointsModel[] = new Array<RewardPointsModel>();
     hstCustomers: any;
 }

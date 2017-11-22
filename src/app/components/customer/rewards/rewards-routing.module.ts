@@ -12,7 +12,7 @@ const routes: Routes = [
         path: '',
         component: RewardsComponent,
         data: {
-            title: 'Rewards'
+            title: 'Customer Rewards'
         }
     }
 ];

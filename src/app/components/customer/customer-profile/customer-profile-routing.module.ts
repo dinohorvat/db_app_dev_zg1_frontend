@@ -12,7 +12,7 @@ const routes: Routes = [
         path: '',
         component: CustomerProfileComponent,
         data: {
-            title: 'UserProfile'
+            title: 'Customer Profile'
         }
     }
 ];

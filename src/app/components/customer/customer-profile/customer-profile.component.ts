@@ -37,13 +37,9 @@ export class CustomerProfileComponent implements OnInit {
   private setCustomer(){
     var localCustomer: CustomerModel = new CustomerModel;
     localCustomer.email = this.keyCloakService.getUser().username;
-    Promise.resolve(this.customerService.searchCustomers(localCustomer)).then(response => {
+    Promise.resolve(this.customerService.findCustomerByEmail(localCustomer)).then(response => {
       if(!isNullOrUndefined(response)){
-        if(response.length == 1){
-          this.customer = response[0];
-        }else {
-          this.globalService.showError("Result Set Error", `The number of result entites is ${response.length}`);
-        }
+        this.customer = response;
       }else {
         alert("Register");
       }

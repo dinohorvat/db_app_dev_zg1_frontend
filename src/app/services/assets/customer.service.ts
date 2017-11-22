@@ -45,6 +45,20 @@ export class CustomerService {
             });
     }
 
+    findCustomerByEmail(entity: CustomerModel): Promise<CustomerModel> {
+        let url = environment.endpoint + 'customer/findByEmail';
+        let request = JSON.stringify(entity);
+
+        return this.http.post(url, request, this.options)
+            .toPromise()
+            .then(response => {
+                return response.json().body as CustomerModel;
+            })
+            .catch(reason => {
+                this.handleError
+            });
+    }
+
 
     saveCustomer(ifEdit: boolean, entity: CustomerModel): Promise<CustomerModel>{
         return this.globalService.saveEntity(ifEdit, 'customer', entity).then(response =>{
