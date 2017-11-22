@@ -17,6 +17,7 @@ import {TransactionItem} from "../../../model/transaction-item";
 import {RewardPointsModel} from "../../../model/reward-points.model";
 import {TransactionsService} from "../../../services/assets/transactions.service";
 import {EmailModel} from "../../../model/email-model";
+import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-create-transaction',
@@ -57,10 +58,12 @@ export class CreateTransactionComponent implements OnInit {
   constructor(private customerService: CustomerService, private globalService: GlobalService,
               private productService: ProductService, private employeeService: EmployeeService,
               private branchService: BranchService, private companyService: CompanyService,
-              private transactionService: TransactionsService) { }
+              private transactionService: TransactionsService, private keycloakService: KeyCloakService) { }
 
 
   ngOnInit() {
+    this.employee = new EmployeeModel;
+
     this.loadEmployeeInfo();
 
     this.appliedPoliciesList = new Array<RewardPolicy>();
@@ -160,11 +163,20 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   private loadEmployeeInfo(){
-    Promise.resolve(this.employeeService.fetchEmployee(1)).then(response => {
-      this.employee = response;
-      this.fetchCompanyPolicies(this.employee.branch.id);
+    var localEmployee: EmployeeModel = new EmployeeModel;
+    localEmployee.username = this.keycloakService.getUser().username;
+    Promise.resolve(this.employeeService.findEmployeeByUsername(localEmployee)).then(response => {
+      if(!isNullOrUndefined(response)){
+        this.employee = response;
+        this.fetchCompanyPolicies(this.employee.branch.id);
+      }else {
+        console.log("Error : " + this.keycloakService.getUser().username );
+        console.log("Usr Obj : " + this.keycloakService.getUser() );
+      }
+
     });
   }
+
   private fetchCompanyPolicies(branchId: number){
     Promise.resolve(this.branchService.fetchBranch(branchId)).then(response =>{
       this.employeeBranch = response;

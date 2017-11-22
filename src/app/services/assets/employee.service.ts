@@ -29,6 +29,21 @@ export class EmployeeService {
             })
             .catch(this.handleError);
     }
+
+    findEmployeeByUsername(entity: EmployeeModel): Promise<EmployeeModel> {
+        let url = environment.endpoint + 'employee/findByUsername';
+        let request = JSON.stringify(entity);
+
+        return this.http.post(url, request, this.options)
+            .toPromise()
+            .then(response => {
+                return response.json().body as EmployeeModel;
+            })
+            .catch(reason => {
+                this.handleError
+            });
+    }
+
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
     }

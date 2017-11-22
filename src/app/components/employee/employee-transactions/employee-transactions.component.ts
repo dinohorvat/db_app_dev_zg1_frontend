@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 import {resource} from "selenium-webdriver/http";
 import {isNullOrUndefined} from "util";
 import {EmailModel} from "../../../model/email-model";
+import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 
 
 @Component({
@@ -36,7 +37,8 @@ export class EmployeeTransactionsComponent implements OnInit {
   constructor(private router: Router, private _permissionService: PermissionService,
               private employeeService: EmployeeService,
               private transactionsService: TransactionsService, private customerService: CustomerService,
-              private globalService: GlobalService, private transactionService: TransactionsService) {
+              private globalService: GlobalService, private transactionService: TransactionsService,
+              private keycloakService: KeyCloakService) {
     if(this.checkPermission()) {
 
     }
@@ -66,10 +68,19 @@ export class EmployeeTransactionsComponent implements OnInit {
   checkPermission(){
     return this._permissionService.hasOneDefined(['employee','owner']); // true or false
   }
+
   private loadEmployeeInfo(){
-    Promise.resolve(this.employeeService.fetchEmployee(1)).then(response => {
-      this.employee = response;
-      this.setPreviousTransactions();
+    var localEmployee: EmployeeModel = new EmployeeModel;
+    localEmployee.username = this.keycloakService.getUser().username;
+    Promise.resolve(this.employeeService.findEmployeeByUsername(localEmployee)).then(response => {
+      if(!isNullOrUndefined(response)){
+        this.employee = response;
+        this.setPreviousTransactions()
+      }else {
+        console.log("Error : " + this.keycloakService.getUser().username );
+        console.log("Usr Obj : " + this.keycloakService.getUser() );
+      }
+
     });
   }
 
