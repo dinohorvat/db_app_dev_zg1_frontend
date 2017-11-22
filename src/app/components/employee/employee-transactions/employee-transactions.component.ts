@@ -156,6 +156,7 @@ export class EmployeeTransactionsComponent implements OnInit {
     });
   }
 
+
   public saveTransactions(){
     Promise.resolve(this.transactionsService.saveTransactions(true, this.selectedTransaction)).then(response =>{
       if(!isNullOrUndefined(response)){

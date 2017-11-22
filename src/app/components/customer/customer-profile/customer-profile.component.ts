@@ -34,7 +34,7 @@ export class CustomerProfileComponent implements OnInit {
     return this._permissionService.hasDefined('customer'); // true or false
   }
 
-  setCustomer(){
+  private setCustomer(){
     var localCustomer: CustomerModel = new CustomerModel;
     localCustomer.email = this.keyCloakService.getUser().username;
     Promise.resolve(this.customerService.searchCustomers(localCustomer)).then(response => {
@@ -50,4 +50,13 @@ export class CustomerProfileComponent implements OnInit {
     }).catch(err => alert(err.message || err));
   }
 
+
+  public saveCustomer(){
+    Promise.resolve(this.customerService.saveCustomer(true, this.customer)).then(response =>{
+        if(!isNullOrUndefined(response)){
+          this.customer = response;
+          this.globalService.showSuccess("Success","Your information has been successfully updated");
+        }
+    });
+  }
 }

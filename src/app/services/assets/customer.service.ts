@@ -5,6 +5,7 @@ import {environment} from "../../../environments/environment";
 import 'rxjs/add/operator/toPromise';
 import {GlobalService} from "../global.service";
 import {EmailModel} from "../../model/email-model";
+import {isNullOrUndefined} from "util";
 /**
  * Created by dinohorvat on 11/11/2017.
  */
@@ -46,7 +47,11 @@ export class CustomerService {
 
 
     saveCustomer(ifEdit: boolean, entity: CustomerModel): Promise<CustomerModel>{
-        return this.globalService.saveEntity(ifEdit, 'customer', entity);
+        return this.globalService.saveEntity(ifEdit, 'customer', entity).then(response =>{
+            if(!isNullOrUndefined(response)){
+                return response.json().body as CustomerModel;
+            }
+        });
     }
 
     private handleError(error: any): Promise<any> {

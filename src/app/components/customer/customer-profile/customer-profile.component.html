@@ -1,3 +1,75 @@
-<p>
-  Name: {{customer?.firstname}}
-</p>
+<div class="animated fadeIn">
+  <h3 class="component-title">Customer Profile</h3>
+
+  <div class="col-md-12 mb-2">
+    <!-- Nav tabs -->
+    <tabset>
+      <tab>
+        <ng-template tabHeading><i class="fa fa-wrench"></i> General &nbsp;</ng-template>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="card card-accent-primary">
+                <div class="card-header">
+                  Personal Information
+                </div>
+                <div class="card-block">
+                  <div class="form-horizontal">
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer ID:</label>
+                      <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.id"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer First Name:</label>
+                      <div  class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.firstname"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer Last Name:</label>
+                      <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.lastname"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--/.col-->
+
+          </div><!--row-->
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="card card-accent-warning">
+                <div class="card-header">
+                  Contact Information
+                </div>
+                <div class="card-block">
+                  <div class="form-horizontal">
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer Phone:</label>
+                      <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.phone"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer Address:</label>
+                      <div  class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.address"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer City:</label>
+                      <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="customer.city"></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-sm-6 form-control-label">Customer e-Mail:</label>
+                      <div  class="col-md-9 col-sm-6"><input disabled class="form-control" type="text" [(ngModel)]="customer.email"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--/.col-->
+          </div><!--row-->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="saveCustomer()">Save Changes</button>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
