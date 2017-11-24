@@ -192,6 +192,7 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   private calculateTotalPointsOfCustomer(){
+    this.customerPoints = 0;
     for(let points of this.selectedCustomer.rewardPoints){
       this.customerPoints += points.amount;
     }

@@ -12,6 +12,7 @@ import {resource} from "selenium-webdriver/http";
 import {isNullOrUndefined} from "util";
 import {EmailModel} from "../../../model/email-model";
 import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
+import {TransactionItem} from "../../../model/transaction-item";
 
 
 @Component({
@@ -33,6 +34,7 @@ export class EmployeeTransactionsComponent implements OnInit {
   private showSearchResults: boolean = false;
   private selectedCustomer: CustomerModel;
   private transactionStatusOptions;
+  private filteredListOfCustomerTransactions: TransactionItem[];
 
   constructor(private router: Router, private _permissionService: PermissionService,
               private employeeService: EmployeeService,
@@ -50,6 +52,7 @@ export class EmployeeTransactionsComponent implements OnInit {
 
   ngOnInit() {
     if(this.checkPermission()) {
+      this.filteredListOfCustomerTransactions = new Array<TransactionItem>();
       this.transactionStatusOptions = this.globalService.statusOptions;
       this.searchCustomer = new CustomerModel;
       this.previousTransaction = new Array<TransactionsModel>();
@@ -157,12 +160,14 @@ export class EmployeeTransactionsComponent implements OnInit {
 
   public showCustomerDetails(customer: CustomerModel){
     this.selectedCustomer = customer;
+    this.selectedCustomer.transactions = this.filterDuplicateTransactions(this.selectedCustomer.transactions);
   }
 
   public switchToCustomer(customerId: number){
     Promise.resolve(this.customerService.fetchCustomer(customerId)).then(resource =>{
       if(!isNullOrUndefined(resource)) {
         this.selectedCustomer = resource;
+        this.selectedCustomer.transactions = this.filterDuplicateTransactions(this.selectedCustomer.transactions);
       }
     });
   }
@@ -194,9 +199,27 @@ export class EmployeeTransactionsComponent implements OnInit {
     for(let trans of this.previousTransaction){
       if(trans.id == response.id){
         trans = response;
-        alert('tu')
       }
     }
     this.selectedTransaction = response;
   }
+
+  public filterDuplicateTransactions(items: TransactionItem[]): TransactionItem[]{
+    let filteredList: TransactionItem[] = new Array<TransactionItem>();
+
+    for(let i=0; i<items.length; i++){
+      let j = i;
+      while(items[i].transaction.id == items[j].transaction.id){
+        j++;
+      }
+
+      filteredList.push(items[i]);
+      i=j;
+    }
+
+    return filteredList;
+  }
+
+
+
 }
