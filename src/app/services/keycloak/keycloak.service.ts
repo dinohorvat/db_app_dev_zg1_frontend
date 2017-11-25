@@ -6,12 +6,14 @@ import {ActivatedRoute} from "@angular/router";
 import {DOCUMENT} from "@angular/platform-browser";
 import {Cookie} from "ng2-cookies";
 import {isNullOrUndefined} from "util";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class KeyCloakService {
 
     private user: User;
     private token: Token;
+    private adminToken: Token;
     private parameters: Parameters;
     private jwtHelper: JwtHelper;
     private tokenCookieKey: string = "DCKeyCloak";
@@ -82,7 +84,7 @@ export class KeyCloakService {
     public getTokenId(): String {
         let token = this.retrieveToken();
         if (token) {
-            this.tokenId = this.retrieveToken().id_token;
+            this.tokenId = this.retrieveToken().access_token;
         }
         return this.tokenId;
     }
@@ -96,8 +98,9 @@ export class KeyCloakService {
         let token = this.retrieveToken();
         if (token) {
             this.user = new User();
-            this.user.username = this.jwtHelper.decodeToken(this.retrieveToken().id_token).preferred_username;
-            this.user.roles = this.jwtHelper.decodeToken(this.retrieveToken().access_token).realm_access.roles;
+            console.log(token);
+            this.user.username = this.jwtHelper.decodeToken(token.access_token).preferred_username;
+            this.user.roles = this.jwtHelper.decodeToken(token.access_token).realm_access.roles;
         }
         return this.user;
     }
@@ -187,6 +190,71 @@ export class KeyCloakService {
             window.location.href = href;
         }
     }
+    private getAdminAPICode(){
+        let parameters: Parameters = this.retrieveParameters();
+        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+            let options = new RequestOptions({headers: headers});
+            let urlSearchParams = new URLSearchParams();
+            urlSearchParams.append('grant_type', 'password');
+            urlSearchParams.append('username', 'admin');
+            urlSearchParams.append('password', 'admin');
+            urlSearchParams.append('client_id', 'admin-cli');
+            console.log('calling this.http.post(parameters.keyClockUrl + "/token")');
+
+        return this.http.post(parameters.keyClockUrl + "/token", urlSearchParams, options).map(
+            (response) => {
+                this.adminToken = JSON.parse(response.text()) as Token;
+                return this.adminToken;
+            }
+        );
+    }
+
+    public registerUser(user: any){
+        this.getAdminAPICode().subscribe(data => {
+            console.log(data.access_token);
+            let headers = new Headers({'Content-Type': 'application/json','Authorization':'Bearer '+data.access_token});
+            let options = new RequestOptions({headers: headers});
+            let userRepresentation: UserRepresentation = new UserRepresentation;
+            let credentialRepresentation: CredentialRepresentation = new CredentialRepresentation;
+            credentialRepresentation.type = "password";
+            credentialRepresentation.value = "password";
+            userRepresentation.username = "hrvoje96";
+            userRepresentation.enabled = true;
+            userRepresentation.requiredActions = ["UPDATE_PASSWORD"];
+            userRepresentation.credentials = [credentialRepresentation];
+            let request = JSON.stringify(userRepresentation);
+
+            let adminParam = environment.keyCloak.admin;
+            console.log('Creating User....');
+            return this.http.post(adminParam + "users", request, options)
+                .toPromise()
+                .then(response => {
+                    console.log(response.headers);
+                    console.log(response.headers.get('location'));
+                    let userId = response.headers.get('location').split('users/')[1];
+                    let adminId = 'e18f805c-6d8c-455e-9cbe-b48201ccedc9';
+                    let roleRepresentationList: RoleRepresentation[] = [];
+                    let roleRepresentation: RoleRepresentation = new RoleRepresentation;
+                    roleRepresentation.name = "employee";
+                    roleRepresentation.id = adminId;
+                    roleRepresentationList.push(roleRepresentation);
+                    let roleRequest = JSON.stringify(roleRepresentationList);
+
+                    return this.http.post(adminParam + "users/"+userId+"/role-mappings/realm/", roleRequest, options)
+                        .toPromise()
+                        .then(response => {
+                            console.log('tu');
+
+                        }
+                        ).catch(this.handleError);
+
+
+                })
+                .catch(this.handleError);
+        });
+
+
+    }
 
     /**
      * refresh treutnog token-a. Ukoliko token nije moguće
@@ -239,7 +307,7 @@ export class KeyCloakService {
      * @return boolean token istekao
      */
     private isTokenExpired(): boolean {
-        return this.jwtHelper.isTokenExpired(this.retrieveToken().id_token);
+        return this.jwtHelper.isTokenExpired(this.retrieveToken().access_token);
     }
 
     /**
@@ -320,4 +388,19 @@ class Parameters {
     redirectUri: string;
     keyClockUrl: string;
     keyClockCode: string;
+}
+
+class UserRepresentation{
+    username: string;
+    enabled: boolean;
+    requiredActions: string[];
+    credentials: CredentialRepresentation[];
+}
+class CredentialRepresentation{
+    type: string;
+    value: string;
+}
+class RoleRepresentation{
+    id: string;
+    name: string;
 }
