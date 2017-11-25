@@ -218,7 +218,7 @@ export class KeyCloakService {
             let credentialRepresentation: CredentialRepresentation = new CredentialRepresentation;
             credentialRepresentation.type = "password";
             credentialRepresentation.value = "password";
-            userRepresentation.username = "hrvoje96";
+            userRepresentation.username = user.email;
             userRepresentation.enabled = true;
             userRepresentation.requiredActions = ["UPDATE_PASSWORD"];
             userRepresentation.credentials = [credentialRepresentation];

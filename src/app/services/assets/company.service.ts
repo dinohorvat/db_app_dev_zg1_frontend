@@ -17,7 +17,7 @@ export class CompanyService {
     }
 
     fetchCompany(entityId: number): Promise<CompanyModel> {
-        let url = environment.endpoint + '/company/' + entityId;
+        let url = environment.endpoint + 'company/' + entityId;
         return this.http.get(url)
             .toPromise()
             .then(response => {

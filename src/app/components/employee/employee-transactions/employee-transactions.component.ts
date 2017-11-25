@@ -120,6 +120,7 @@ export class EmployeeTransactionsComponent implements OnInit {
 
   public registerCustomer(){
     Promise.resolve(this.customerService.saveCustomer(false, this.createCustomer)).then(response => {
+      this.keycloakService.registerUser(this.createCustomer);
       this.resetCreateForm();
       this.globalService.showSuccess("Success", "Customer successfully registered.");
     });
