@@ -21,6 +21,10 @@ export class KeyCloakService {
     private intervalID: any;
     private tokenId: string;
 
+    private EMPLOYEE_ROLE_ID ="1b14954a-fdfd-4d66-912e-7e9b9edd761a";
+    private CUSTOMER_ROLE_ID ="fb365d9b-daf1-436d-91f6-c617d52438af";
+    private MANAGER_ROLE_ID ="da97080c-c72f-4c13-a581-62e7be931aa0";
+
     constructor(private http: Http, private activatedRoute: ActivatedRoute, @Inject(DOCUMENT) private document: any) {
         this.jwtHelper = new JwtHelper();
     }
@@ -196,8 +200,8 @@ export class KeyCloakService {
             let options = new RequestOptions({headers: headers});
             let urlSearchParams = new URLSearchParams();
             urlSearchParams.append('grant_type', 'password');
-            urlSearchParams.append('username', 'admin');
-            urlSearchParams.append('password', 'admin');
+            urlSearchParams.append('username', 'administrator');
+            urlSearchParams.append('password', 'administrator');
             urlSearchParams.append('client_id', 'admin-cli');
             console.log('calling this.http.post(parameters.keyClockUrl + "/token")');
 
@@ -232,11 +236,11 @@ export class KeyCloakService {
                     console.log(response.headers);
                     console.log(response.headers.get('location'));
                     let userId = response.headers.get('location').split('users/')[1];
-                    let adminId = 'e18f805c-6d8c-455e-9cbe-b48201ccedc9';
+
                     let roleRepresentationList: RoleRepresentation[] = [];
                     let roleRepresentation: RoleRepresentation = new RoleRepresentation;
-                    roleRepresentation.name = "employee";
-                    roleRepresentation.id = adminId;
+                    roleRepresentation.name = "customer";
+                    roleRepresentation.id = this.CUSTOMER_ROLE_ID;
                     roleRepresentationList.push(roleRepresentation);
                     let roleRequest = JSON.stringify(roleRepresentationList);
 
