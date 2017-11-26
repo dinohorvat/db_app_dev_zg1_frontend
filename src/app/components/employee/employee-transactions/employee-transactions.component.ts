@@ -119,12 +119,18 @@ export class EmployeeTransactionsComponent implements OnInit {
   }
 
   public registerCustomer(){
-    console.log(this.createCustomer);
-    console.log(JSON.stringify(this.createCustomer));
     Promise.resolve(this.customerService.saveCustomer(false, this.createCustomer)).then(response => {
-      console.log(response);
+      let generate_password = Math.random().toString(36).slice(-8);
+      this.createCustomer.password = generate_password;
+
       this.keycloakService.registerUser(this.createCustomer);
+      var emailModel:EmailModel = new EmailModel(this.createCustomer.email, "Welcome to DRY Cleaners!",
+          `Your account has been created.
+             \nUsername: ${this.createCustomer.email}
+             \nPassword: ${this.createCustomer.password}`);
+      this.customerService.notifyCustomer(emailModel);
       this.resetCreateForm();
+
       this.globalService.showSuccess("Success", "Customer successfully registered.");
     });
   }

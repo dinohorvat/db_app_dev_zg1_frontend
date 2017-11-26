@@ -16,4 +16,5 @@ export class CustomerModel{
     transactions: TransactionItem[] = new Array<TransactionItem>();
     rewardPoints: RewardPointsModel[] = new Array<RewardPointsModel>();
     hstCustomers: any;
+    password: string;
 }

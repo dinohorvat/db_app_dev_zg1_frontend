@@ -14,7 +14,6 @@ export class EmployeeService {
     options = new RequestOptions({headers: this.headers});
     inflection = require('inflection');
 
-
     employees: EmployeeModel[];
 
     constructor(private http: Http) {
