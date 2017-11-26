@@ -34,6 +34,7 @@ import {KeyCloakService} from "./services/keycloak/keycloak.service";
 import { LoginScreenComponent } from './components/login/login-screen/login-screen.component';
 import { LogoutScreenComponent } from './components/login/logout-screen/logout-screen.component';
 import {ToasterModule, ToasterService} from "angular2-toaster";
+import {ConfirmationService, ConfirmDialogModule} from "primeng/primeng";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import {ToasterModule, ToasterService} from "angular2-toaster";
     Ng2Permission,
     HttpModule,
     ToasterModule,
+    ConfirmDialogModule
   ],
   declarations: [
     AppComponent,
@@ -72,6 +74,7 @@ import {ToasterModule, ToasterService} from "angular2-toaster";
       ToasterService,
       PermissionGuard,
       PermissionService,
+      ConfirmationService,
       {
     provide: LocationStrategy,
     useClass: PathLocationStrategy

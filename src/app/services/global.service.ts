@@ -11,6 +11,7 @@ import 'rxjs/add/operator/toPromise';
 import {Router} from "@angular/router";
 import {CompanyService} from "./assets/company.service";
 import {ToasterConfig, ToasterService} from "angular2-toaster";
+import {ConfirmationService} from "primeng/primeng";
 
 
 @Injectable()
@@ -23,8 +24,9 @@ export class GlobalService{
     constructor (private companyService: CompanyService,
                  private http: Http,
                  private router:Router,
-                 private toasterService: ToasterService) {
-    }
+                 private toasterService: ToasterService,
+                 private confirmationService: ConfirmationService,
+    ){}
 
     public toasterconfig : ToasterConfig =
         new ToasterConfig({
@@ -54,6 +56,13 @@ export class GlobalService{
                 })
                 .catch(this.handleError);
         }
+    }
+
+    raiseConfirmationDialog(message: string, action: any) {
+        this.confirmationService.confirm({
+            message: message,
+            accept: action
+        });
     }
 
     private handleError(error: any): Promise<any> {

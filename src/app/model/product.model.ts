@@ -1,3 +1,4 @@
+import {HstProduct} from "./hst/product-hst";
 /**
  * Created by dinohorvat on 12/11/2017.
  */
@@ -6,5 +7,5 @@ export class ProductModel {
     name: string;
     description: string;
     price: number;
-    hstProducts: any;
+    hstProducts: HstProduct[] = new Array<HstProduct>();
 }
