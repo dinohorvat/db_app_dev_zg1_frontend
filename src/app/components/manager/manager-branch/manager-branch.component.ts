@@ -5,6 +5,7 @@ import {isNullOrUndefined} from "util";
 import {BranchModel} from "../../../model/branch.model";
 import {EmployeeModel} from "../../../model/employee.model";
 import {EmployeeService} from "../../../services/assets/employee.service";
+import {ProductService} from "../../../services/assets/product.service";
 
 @Component({
   selector: 'app-manager-branch',
@@ -15,19 +16,19 @@ export class ManagerBranchComponent implements OnInit {
 
   branch: BranchModel;
   employees: EmployeeModel[];
-  id: number;
+  id: any;
 
   employeesNumber: number;
   transactionsNumber: number;
 
-  constructor(private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) { }
+  constructor(private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) {
+    activatedRoute.paramMap.subscribe(params =>{
+      this.id = params.get('id');
+      this.getBranchObject(this.id);
+    });
+  }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.id = Number.parseInt(params['id']);
-    });
-    this.getBranchObject(this.id);
-
   }
   getBranchObject(id: number){
     Promise.resolve(this.branchService.fetchBranch(id))
@@ -38,8 +39,7 @@ export class ManagerBranchComponent implements OnInit {
             this.employeesNumber = this.branch.employees.length;
             this.transactionsNumber = this.branch.transactions.length;
 
-            this.employeeService.employees = this.employees
-            console.log(this.branch);
+            this.employeeService.employees = this.employees;
           }
         });
 

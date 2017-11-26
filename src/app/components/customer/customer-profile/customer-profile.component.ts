@@ -41,7 +41,6 @@ export class CustomerProfileComponent implements OnInit {
       if(!isNullOrUndefined(response)){
         this.customer = response;
       }else {
-        alert("Register");
       }
     }).catch(err => alert(err.message || err));
   }
