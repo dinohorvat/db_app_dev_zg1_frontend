@@ -123,7 +123,7 @@ export class EmployeeTransactionsComponent implements OnInit {
       let generate_password = Math.random().toString(36).slice(-8);
       this.createCustomer.password = generate_password;
 
-      this.keycloakService.registerUser(this.createCustomer);
+      this.keycloakService.registerUser(this.createCustomer, "customer");
       var emailModel:EmailModel = new EmailModel(this.createCustomer.email, "Welcome to DRY Cleaners!",
           `Your account has been created.
              \nUsername: ${this.createCustomer.email}

@@ -213,7 +213,15 @@ export class KeyCloakService {
         );
     }
 
-    public registerUser(user: any){
+    public registerUser(user: any, roleName:string){
+        alert(roleName);
+        let roleAPI = "";
+        if(roleName == "customer"){
+            roleAPI = this.CUSTOMER_ROLE_ID;
+        }
+        else if(roleName == "employee"){
+            roleAPI = this.EMPLOYEE_ROLE_ID;
+        }
         this.getAdminAPICode().subscribe(data => {
             console.log(data.access_token);
             let headers = new Headers({'Content-Type': 'application/json','Authorization':'Bearer '+data.access_token});
@@ -221,8 +229,14 @@ export class KeyCloakService {
             let userRepresentation: UserRepresentation = new UserRepresentation;
             let credentialRepresentation: CredentialRepresentation = new CredentialRepresentation;
             credentialRepresentation.type = "password";
-            credentialRepresentation.value = user.password;
-            userRepresentation.username = user.email;
+            if(roleName == "customer"){
+                userRepresentation.username = user.email;
+                credentialRepresentation.value = user.password;
+            }
+            else if(roleName == "employee"){
+                userRepresentation.username = user.username;
+                credentialRepresentation.value = user.username;
+            }
             userRepresentation.enabled = true;
             userRepresentation.requiredActions = ["UPDATE_PASSWORD"];
             userRepresentation.credentials = [credentialRepresentation];
@@ -239,8 +253,8 @@ export class KeyCloakService {
 
                     let roleRepresentationList: RoleRepresentation[] = [];
                     let roleRepresentation: RoleRepresentation = new RoleRepresentation;
-                    roleRepresentation.name = "customer";
-                    roleRepresentation.id = this.CUSTOMER_ROLE_ID;
+                    roleRepresentation.name = roleName;
+                    roleRepresentation.id = roleAPI;
                     roleRepresentationList.push(roleRepresentation);
                     let roleRequest = JSON.stringify(roleRepresentationList);
 

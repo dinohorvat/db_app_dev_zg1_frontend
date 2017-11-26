@@ -22,8 +22,6 @@ export class EmployeeProfileComponent implements OnInit {
     this.loadEmployeeInfo();
   }
 
-
-
   private loadEmployeeInfo(){
     var localEmployee: EmployeeModel = new EmployeeModel;
     localEmployee.username = this.keycloakService.getUser().username;
