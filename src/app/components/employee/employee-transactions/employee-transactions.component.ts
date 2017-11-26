@@ -211,15 +211,18 @@ export class EmployeeTransactionsComponent implements OnInit {
   public filterDuplicateTransactions(items: TransactionItem[]): TransactionItem[]{
     let filteredList: TransactionItem[] = new Array<TransactionItem>();
 
-    for(let i=0; i<items.length; i++){
-      let j = i;
-      while(items[i].transaction.id == items[j].transaction.id){
-        j++;
-      }
+    if(!isNullOrUndefined(items)){
+      for(let i=0; i<items.length; i++){
+        let j = i;
+        while(j<items.length && items[i].transaction.id == items[j].transaction.id){
+          j++;
+        }
 
-      filteredList.push(items[i]);
-      i=j;
+        filteredList.push(items[i]);
+        i=j;
+      }
     }
+
 
     return filteredList;
   }

@@ -134,7 +134,8 @@
                            </div>
                         </div>
                         <div class="col-md-4">
-                           <button type="button" class="btn btn-sm btn-primary" (click)="showHidden()"><i class="fa fa-plus"></i>Apply Discount</button>
+                           <button type="button" *ngIf="!showHiddenStep" class="btn btn-sm btn-primary" (click)="showHidden()"><i class="fa fa-plus"></i>Apply Discount</button>
+                           <button type="button" *ngIf="showHiddenStep" class="btn btn-sm btn-secondary" (click)="showHidden()"><i class="fa fa-plus"></i>Skip Discount</button>
                         </div>
                      </div>
                   </div>
