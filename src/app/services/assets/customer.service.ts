@@ -65,7 +65,9 @@ export class CustomerService {
             if(!isNullOrUndefined(response)){
                 return response.json().body as CustomerModel;
             }
-        });
+        }).catch(reason => {
+            this.globalService.showError("Error Has Occurred", reason.json().message);
+        })
     }
 
     private handleError(error: any): Promise<any> {
