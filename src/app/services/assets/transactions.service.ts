@@ -15,6 +15,7 @@ export class TransactionsService {
     inflection = require('inflection');
     transactionStatus = ['badge badge-success', 'badge badge-danger', 'badge badge-warning', 'badge badge-primary'];
 
+    transactions: TransactionsModel[];
     constructor(private http: Http, private globalService: GlobalService) {
     }
 

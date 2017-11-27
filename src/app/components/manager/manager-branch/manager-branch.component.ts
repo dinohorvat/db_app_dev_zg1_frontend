@@ -6,6 +6,8 @@ import {BranchModel} from "../../../model/branch.model";
 import {EmployeeModel} from "../../../model/employee.model";
 import {EmployeeService} from "../../../services/assets/employee.service";
 import {ProductService} from "../../../services/assets/product.service";
+import {TransactionsService} from "../../../services/assets/transactions.service";
+import {TransactionsModel} from "../../../model/transactions.model";
 
 @Component({
   selector: 'app-manager-branch',
@@ -16,6 +18,7 @@ export class ManagerBranchComponent implements OnInit {
 
   branch: BranchModel;
   employees: EmployeeModel[];
+  transactions: TransactionsModel[];
   id: any;
 
   employeesNumber: number;
@@ -23,7 +26,7 @@ export class ManagerBranchComponent implements OnInit {
 
   initialLoadBlock: boolean = true;
 
-  constructor(private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) {
+  constructor(private transactionService: TransactionsService, private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) {
     activatedRoute.paramMap.subscribe(params =>{
       this.id = params.get('id');
       this.getBranchObject(this.id);
@@ -38,10 +41,12 @@ export class ManagerBranchComponent implements OnInit {
           if(!isNullOrUndefined(response)){
             this.branch = response;
             this.employees = this.branch.employees;
+            this.transactions = this.branch.transactions;
             this.employeesNumber = this.branch.employees.length;
             this.transactionsNumber = this.branch.transactions.length;
 
             this.employeeService.employees = this.employees;
+            this.transactionService.transactions = this.transactions;
           }
           this.initialLoadBlock = false;
         });
