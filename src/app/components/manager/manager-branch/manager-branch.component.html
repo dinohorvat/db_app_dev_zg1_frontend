@@ -1,4 +1,6 @@
-<div class="row">
+<div *ngIf="initialLoadBlock" class="mojSpinner sk-rotating-plane"></div>
+
+<div *ngIf="!initialLoadBlock" class="row">
 <div class="col-sm-6 col-md-2">
   <div class="card card-inverse card-info">
     <div class="card-block">

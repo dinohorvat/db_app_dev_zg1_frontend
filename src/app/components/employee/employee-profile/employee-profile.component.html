@@ -1,4 +1,6 @@
-<div class="animated fadeIn">
+<div *ngIf="showInitialLoadBlock" class="mojSpinner sk-rotating-plane"></div>
+
+<div *ngIf="!showInitialLoadBlock" class="animated fadeIn">
   <h3 class="component-title">Employee Profile</h3>
 
   <div class="col-md-12 mb-2">

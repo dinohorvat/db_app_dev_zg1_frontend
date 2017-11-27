@@ -21,6 +21,8 @@ export class ManagerBranchComponent implements OnInit {
   employeesNumber: number;
   transactionsNumber: number;
 
+  initialLoadBlock: boolean = true;
+
   constructor(private employeeService: EmployeeService, private branchService: BranchService, private activatedRoute: ActivatedRoute) {
     activatedRoute.paramMap.subscribe(params =>{
       this.id = params.get('id');
@@ -41,6 +43,7 @@ export class ManagerBranchComponent implements OnInit {
 
             this.employeeService.employees = this.employees;
           }
+          this.initialLoadBlock = false;
         });
 
   }

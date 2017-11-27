@@ -23,6 +23,9 @@ import {TransactionItem} from "../../../model/transaction-item";
 })
 export class EmployeeTransactionsComponent implements OnInit {
 
+  showInitialLoadBlock: boolean = true;
+  secondaryLoadBlock: boolean = false;
+
   private employee: EmployeeModel;
   private previousTransaction: TransactionsModel [];
   private selectedTransaction: TransactionsModel;
@@ -79,6 +82,7 @@ export class EmployeeTransactionsComponent implements OnInit {
       if(!isNullOrUndefined(response)){
         this.employee = response;
         this.setPreviousTransactions()
+        this.showInitialLoadBlock = false;
       }else {
         console.log("Error : " + this.keycloakService.getUser().username );
         console.log("Usr Obj : " + this.keycloakService.getUser() );
@@ -137,6 +141,7 @@ export class EmployeeTransactionsComponent implements OnInit {
 
 
   public searchCustomers(){
+    this.secondaryLoadBlock = true;
 
     if(!isNullOrUndefined(this.searchCustomer.id)){
       Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
@@ -154,16 +159,27 @@ export class EmployeeTransactionsComponent implements OnInit {
             }
           });
         }
+
+        this.secondaryLoadBlock = false;
       });
     }else {
-      Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
-        if(!isNullOrUndefined(resource)){
-          this.customerSearchResults = resource;
-          this.showSearchResults = true;
-        }else {
-          this.globalService.showWarning("Not Found", "No results found.");
-        }
-      });
+      if(!isNullOrUndefined(this.searchCustomer.email) || !isNullOrUndefined(this.searchCustomer.firstname)
+          || !isNullOrUndefined(this.searchCustomer.lastname)){
+
+        Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
+          if(!isNullOrUndefined(resource)){
+            this.customerSearchResults = resource;
+            this.showSearchResults = true;
+          }else {
+            this.globalService.showWarning("Not Found", "No results found.");
+          }
+
+          this.secondaryLoadBlock = false;
+        });
+      }else {
+        this.secondaryLoadBlock = false;
+        this.globalService.showError("No search condition","Please enter search condition");
+      }
     }
   }
 

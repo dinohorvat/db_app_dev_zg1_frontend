@@ -11,6 +11,7 @@ import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 })
 export class EmployeeProfileComponent implements OnInit {
 
+  showInitialLoadBlock: boolean = true;
   private employee: EmployeeModel;
 
   constructor(private employeeService: EmployeeService, private keycloakService: KeyCloakService) {
@@ -28,6 +29,7 @@ export class EmployeeProfileComponent implements OnInit {
     Promise.resolve(this.employeeService.findEmployeeByUsername(localEmployee)).then(response => {
       if(!isNullOrUndefined(response)){
         this.employee = response;
+        this.showInitialLoadBlock = false;
       }else {
         console.log("Error : " + this.keycloakService.getUser().username );
         console.log("Usr Obj : " + this.keycloakService.getUser() );

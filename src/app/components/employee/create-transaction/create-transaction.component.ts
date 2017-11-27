@@ -26,6 +26,7 @@ import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 })
 export class CreateTransactionComponent implements OnInit {
 
+  secondaryLoadBlock: boolean = false;
   showHiddenStep:boolean = false;
   isCompleted: boolean = false;
   isStep1Valid: boolean = false;
@@ -100,6 +101,7 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   public searchCustomers(){
+    this.secondaryLoadBlock = true;
 
     if(!isNullOrUndefined(this.searchCustomer.id)){
       Promise.resolve(this.customerService.fetchCustomer(this.searchCustomer.id)).then(resource =>{
@@ -107,6 +109,8 @@ export class CreateTransactionComponent implements OnInit {
           this.customerSearchResults = new Array<CustomerModel>();
           this.customerSearchResults.push(resource);
           this.showSearchResults = true;
+
+          this.secondaryLoadBlock = false;
         }else {
           Promise.resolve(this.customerService.searchCustomers(this.searchCustomer)).then(resource =>{
             if(!isNullOrUndefined(resource)){
@@ -115,6 +119,8 @@ export class CreateTransactionComponent implements OnInit {
             }else {
               this.globalService.showWarning("Not Found", "No results found.");
             }
+
+            this.secondaryLoadBlock = false;
           });
         }
       });
@@ -129,8 +135,11 @@ export class CreateTransactionComponent implements OnInit {
           }else {
             this.globalService.showWarning("Not Found", "No results found.");
           }
+
+          this.secondaryLoadBlock = false;
         });
       }else {
+        this.secondaryLoadBlock = false;
         this.globalService.showError("No search condition","Please enter search condition");
       }
     }
