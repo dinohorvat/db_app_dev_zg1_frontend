@@ -44,7 +44,9 @@ export class GlobalService{
                 .then(response => {
                     return response;
                 })
-                .catch(this.handleError);
+                .catch(reason => {
+                    this.showError("Error Has Occurred", reason.json().message);
+                });
         }
 
         // POST
@@ -54,7 +56,9 @@ export class GlobalService{
                 .then(response => {
                     return response;
                 })
-                .catch(this.handleError);
+                .catch(reason => {
+                    this.showError("Error Has Occurred", reason.json().message);
+                });
         }
     }
 

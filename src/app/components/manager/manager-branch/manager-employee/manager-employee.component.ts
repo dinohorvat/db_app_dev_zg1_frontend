@@ -51,9 +51,6 @@ export class ManagerEmployeeComponent implements OnInit {
 
         this.globalService.showSuccess("Success","Employee Created");
       }
-      else{
-        this.globalService.showWarning("Not Found", "No results found.");
-      }
     });
   }
   editEmployee(){
@@ -66,7 +63,7 @@ export class ManagerEmployeeComponent implements OnInit {
         this.globalService.showSuccess("Success","Employee updated");
       }
       else{
-        this.globalService.showWarning("Not Found", "No results found.");
+        this.globalService.showError("Error", "Update failed.");
       }
     });
   }
