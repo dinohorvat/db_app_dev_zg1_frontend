@@ -282,7 +282,7 @@ export class CreateTransactionComponent implements OnInit {
                   `Thank you on your order. Your transaction has been successfully recorded. 
                   \nTransaction Number: ${this.transaction.id}
                   \nTotal amount: ${this.transaction.totalPrice}${this.employeeCompany.currency.abbreviation}
-                  \nExpected time of ccompletion ${this.transaction.dcsDate.transactionExpCompleted}
+                  \nExpected time of completion: ${this.transaction.dcsDate.transactionExpCompleted}
                   \nPoints earned: ${this.tempEarnedCustomerPoints}
                   \nTotal amount of points: ${this.customerPoints}`);
               this.customerService.notifyCustomer(emailModel);
