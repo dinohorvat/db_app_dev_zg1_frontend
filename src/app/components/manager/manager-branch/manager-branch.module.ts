@@ -11,6 +11,7 @@ import {ManagerEmployeeComponent} from "./manager-employee/manager-employee.comp
 import {EmployeeProfileComponent} from "../../employee/employee-profile/employee-profile.component";
 import {ManagerTransactionsComponent} from "./manager-transactions/manager-transactions.component";
 import {EmployeeTransactionsComponent} from "../../employee/employee-transactions/employee-transactions.component";
+import { ManagerBranchHistoryComponent } from './manager-branch-history/manager-branch-history.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {EmployeeTransactionsComponent} from "../../employee/employee-transaction
         ManagerEmployeeComponent,
         EmployeeProfileComponent,
         ManagerTransactionsComponent,
-        EmployeeTransactionsComponent
+        EmployeeTransactionsComponent,
+        ManagerBranchHistoryComponent
     ]
 })
 export class ManagerBranchModule {}

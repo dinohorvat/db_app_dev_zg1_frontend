@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {environment} from "../../../environments/environment";
 import 'rxjs/add/operator/toPromise';
 import {BranchModel} from "../../model/branch.model";
+import {HstBranch} from "../../model/hst/branch-hst";
 /**
  * Created by dinohorvat on 11/11/2017.
  */
@@ -12,6 +13,8 @@ export class BranchService {
     headers = new Headers({'Content-Type': 'application/json'});
     options = new RequestOptions({headers: this.headers});
     inflection = require('inflection');
+
+    hstBrnach: HstBranch[];
 
 
     constructor(private http: Http) {
