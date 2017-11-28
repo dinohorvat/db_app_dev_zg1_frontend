@@ -8,6 +8,7 @@ import {EmployeeService} from "../../../services/assets/employee.service";
 import {ProductService} from "../../../services/assets/product.service";
 import {TransactionsService} from "../../../services/assets/transactions.service";
 import {TransactionsModel} from "../../../model/transactions.model";
+import {HstBranch} from "../../../model/hst/branch-hst";
 
 @Component({
   selector: 'app-manager-branch',
@@ -19,10 +20,13 @@ export class ManagerBranchComponent implements OnInit {
   branch: BranchModel;
   employees: EmployeeModel[];
   transactions: TransactionsModel[];
+  branchHst: HstBranch[];
+
   id: any;
 
   employeesNumber: number;
   transactionsNumber: number;
+  historyNumber: number;
 
   initialLoadBlock: boolean = true;
 
@@ -42,11 +46,16 @@ export class ManagerBranchComponent implements OnInit {
             this.branch = response;
             this.employees = this.branch.employees;
             this.transactions = this.branch.transactions;
+            this.branchHst = this.branch.hstBranches;
+
+
             this.employeesNumber = this.branch.employees.length;
             this.transactionsNumber = this.branch.transactions.length;
+            this.historyNumber = this.branch.hstBranches.length;
 
             this.employeeService.employees = this.employees;
             this.transactionService.transactions = this.transactions;
+            this.branchService.hstBrnach = this.branchHst;
           }
           this.initialLoadBlock = false;
         });

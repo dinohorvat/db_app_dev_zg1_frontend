@@ -214,7 +214,6 @@ export class KeyCloakService {
     }
 
     public registerUser(user: any, roleName:string){
-        alert(roleName);
         let roleAPI = "";
         if(roleName == "customer"){
             roleAPI = this.CUSTOMER_ROLE_ID;

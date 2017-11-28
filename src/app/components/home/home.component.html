@@ -1,6 +1,6 @@
-<p>
-  home works!
-</p>
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+<div class="animated fadeIn">
+  <h3 class="component-title">Welcome to DRY Cleaners</h3>
+</div>
+<agm-map [zoom]="6" [latitude]="lat" [longitude]="lng">
+  <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>
 </agm-map>
