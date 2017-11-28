@@ -6,6 +6,7 @@ import {isNullOrUndefined} from "util";
 import {KeyCloakService} from "../../../services/keycloak/keycloak.service";
 import {TransactionsService} from "../../../services/assets/transactions.service";
 import {TransactionsModel} from "../../../model/transactions.model";
+import {TransactionItem} from "../../../model/transaction-item";
 
 @Component({
   selector: 'app-service-info',
@@ -33,6 +34,7 @@ export class TransactionInfoComponent implements OnInit {
     Promise.resolve(this.customerService.findCustomerByEmail(localCustomer)).then(response => {
       if(!isNullOrUndefined(response)){
         this.customer = response;
+        this.customer.transactions = this.filterDuplicateTransactions(this.customer.transactions);
       }else {
       }
     }).catch(err => alert(err.message || err));
@@ -48,5 +50,23 @@ export class TransactionInfoComponent implements OnInit {
         this.selectedTransaction = response;
       }
     })
+  }
+
+  private filterDuplicateTransactions(items: TransactionItem[]): TransactionItem[] {
+    let filteredList: TransactionItem[] = new Array<TransactionItem>();
+
+    if (!isNullOrUndefined(items)) {
+      for (let i = 0; i < items.length; i++) {
+        let j = i;
+        while (j < items.length && items[i].transaction.id == items[j].transaction.id) {
+          j++;
+        }
+
+        filteredList.push(items[i]);
+        i = j;
+      }
+    }
+
+    return filteredList;
   }
 }
