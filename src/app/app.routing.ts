@@ -17,16 +17,6 @@ export const routes: Routes = [
   {
     path: '',
     component: FullLayoutComponent,
-    data: {
-      title: 'DCS',
-      Permission: {
-        Except: ['customer'],
-        RedirectTo: '403'
-      } as IPermissionGuardModel
-    },
-    canActivate: [PermissionGuard],
-
-
     children: [
       {
         path: 'transaction-info',
