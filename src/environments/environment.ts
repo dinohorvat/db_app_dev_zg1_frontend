@@ -12,6 +12,6 @@ export const environment = {
     admin: "http://159.89.15.128:8080/auth/admin/realms/DCS/",
     clientId:"DCS-GUI"
   },
-  applicationUrl:"http://localhost:4200"
+  applicationUrl:"http://159.89.15.128:4200"
 
 };
