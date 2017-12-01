@@ -50,7 +50,63 @@
             </div>
           </div>
         </div>
+      </tab>
 
+      <tab>
+        <ng-template tabHeading><i class="fa fa-fort-awesome"></i> Company</ng-template>
+        <div class="col-sm-12 col-md-12">
+          <div class="card card-accent-primary">
+            <div class="card-header">
+              General Information
+            </div>
+
+            <div class="card-block">
+              <div class="form-horizontal">
+                <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Company Name:</label>
+                  <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="company.name"></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Company Description: </label>
+                  <div class="col-md-9 col-sm-6"><input class="form-control" type="text" [(ngModel)]="company.description"></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-sm-6 form-control-label">Point Exchange Rate:</label>
+                  <div class="col-md-9 col-sm-6"><input class="form-control" type="number" [(ngModel)]="company.pointExchangeRate"></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" (click)="saveCompany()">Save Changes</button>
+            </div>
+          </div>
+
+          <div class="card card-accent-warning">
+            <div class="card-header">
+              Reward Policies
+            </div>
+
+            <div class="card-block">
+              <div class="form-horizontal">
+                <div class="form-group row" *ngFor="let policy of company.policies">
+                  <div class="col-md-5 col-sm-5">
+                    <input class="form-control" type="number" placeholder="Number of points" [(ngModel)]="policy.numPoints">
+                  </div>
+                  <div class="col-md-5 col-sm-5">
+                    <input class="form-control" type="number" placeholder="Amount reduced" [(ngModel)]="policy.amountReduced">
+                  </div>
+                  <div class="col-md-2 col-sm-2">
+                    <button class="btn btn-outline-danger" type="button" (click)="removePolicy(policy)"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="addPolicy()">Add Policy</button>
+              <button type="button" class="btn btn-success" (click)="saveCompany()">Save Changes</button>
+            </div>
+          </div>
+        </div>
       </tab>
     </tabset>
   </div>

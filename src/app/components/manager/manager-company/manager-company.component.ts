@@ -6,6 +6,7 @@ import {GlobalService} from "../../../services/global.service";
 import {BranchService} from "../../../services/assets/branch.service";
 import {BranchModel} from "../../../model/branch.model";
 import {LocationModel} from "../../../model/location.model";
+import {RewardPolicy} from "../../../model/reward-policy";
 
 @Component({
   selector: 'app-manager-company',
@@ -22,6 +23,7 @@ export class ManagerCompanyComponent implements OnInit {
   constructor(private branchService: BranchService, private globalService: GlobalService, private companyService: CompanyService) { }
 
   ngOnInit() {
+    this.company = new CompanyModel;
     this.selectedBranch = new BranchModel;
     this.selectedBranch.location = new LocationModel;
     this.getCompanyObject();
@@ -62,7 +64,6 @@ export class ManagerCompanyComponent implements OnInit {
     this.selectedBranch.company = tempCompany;
     Promise.resolve(this.globalService.saveEntity(true, "branch", this.selectedBranch)).then(resource =>{
       if(!isNullOrUndefined(resource)){
-        console.log(resource);
         this.globalService.showSuccess("Success","Branch updated");
       }
         else{
@@ -72,5 +73,28 @@ export class ManagerCompanyComponent implements OnInit {
   }
   showBranchDetails(branch: BranchModel){
     this.selectedBranch = branch;
+  }
+
+  removePolicy(policy: RewardPolicy){
+    let idx = this.company.policies.indexOf(policy);
+    this.company.policies.splice(idx,1);
+  }
+
+  addPolicy(){
+    let newPolicy = new RewardPolicy();
+    this.company.policies.push(newPolicy);
+  }
+
+  saveCompany(){
+    delete this.company.branches;
+
+    Promise.resolve(this.globalService.saveEntity(true, "company", this.company)).then(resource =>{
+      if(!isNullOrUndefined(resource)){
+        this.globalService.showSuccess("Success","Company updated");
+      }
+      else{
+        this.globalService.showError("Error", "Could not update.");
+      }
+    });
   }
 }
