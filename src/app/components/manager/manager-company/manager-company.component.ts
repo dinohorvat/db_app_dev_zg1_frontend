@@ -78,6 +78,16 @@ export class ManagerCompanyComponent implements OnInit {
   removePolicy(policy: RewardPolicy){
     let idx = this.company.policies.indexOf(policy);
     this.company.policies.splice(idx,1);
+
+    if (!isNullOrUndefined(policy.id)){
+      Promise.resolve(this.companyService.removeCompanyPolicy(policy.id, this.company.id)).then(response =>{
+        if(!isNullOrUndefined(response)){
+          this.globalService.showSuccess("Success","Policy deleted from database.");
+        }
+      });
+    }else {
+      this.globalService.showSuccess("Success","Policy removed.");
+    }
   }
 
   addPolicy(){

@@ -26,6 +26,17 @@ export class CompanyService {
             .catch(this.handleError);
     }
 
+    removeCompanyPolicy(rewardId: number, companyId: number){
+        let url = environment.endpoint + `reward_policy/${rewardId}/${companyId}`;
+
+        return this.http.delete(url)
+            .toPromise()
+            .then(response => {
+                return response;
+            })
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         return Promise.reject(error.message || error);
     }
