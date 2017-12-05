@@ -132,7 +132,8 @@ export class EmployeeTransactionsComponent implements OnInit {
         var emailModel:EmailModel = new EmailModel(this.createCustomer.email, "Welcome to DRY Cleaners!",
             `Your account has been created.
              \nUsername: ${this.createCustomer.email}
-             \nPassword: ${this.createCustomer.password}`);
+             \nPassword: ${this.createCustomer.password}
+             \nVisit us at: http://159.89.15.128:4200`);
         this.customerService.notifyCustomer(emailModel);
         this.resetCreateForm();
 

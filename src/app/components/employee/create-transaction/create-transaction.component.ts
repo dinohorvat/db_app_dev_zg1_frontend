@@ -284,7 +284,8 @@ export class CreateTransactionComponent implements OnInit {
                   \nTotal amount: ${this.transaction.totalPrice}${this.employeeCompany.currency.abbreviation}
                   \nExpected time of completion: ${this.transaction.dcsDate.transactionExpCompleted}
                   \nPoints earned: ${this.tempEarnedCustomerPoints}
-                  \nTotal amount of points: ${this.customerPoints}`);
+                  \nTotal amount of points: ${this.customerPoints+this.tempEarnedCustomerPoints}
+                  \nVisit us at: http://159.89.15.128:4200`);
               this.customerService.notifyCustomer(emailModel);
             }
           });
